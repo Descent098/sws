@@ -1,4 +1,4 @@
-![sws-banner](./docs/img/sws-banner.png)
+![sws-banner](https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png)
 
 
 
