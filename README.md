@@ -1,8 +1,8 @@
-![kuws logo](https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-logo.png)
+![sws-banner](./docs/img/sws-banner.png)
 
 
 
-# sws; Super Web Scripts
+# Super Web Scripts
 
 A command line interface, and set of scripts for common web tasks.
 
@@ -47,7 +47,7 @@ Options:
 
 ## Documentation
 
-User Documentation can be found at [https://sws.readthedocs.io](https://sws.readthedocs.io).
+User Documentation can be found at [https://kieranwood.ca/sws/](https://kieranwood.ca/sws/).
 
 
 
