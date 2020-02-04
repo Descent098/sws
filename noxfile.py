@@ -35,9 +35,7 @@ def release(session):
     confirm("Have you updated the readme docs?")
     
     # Build & Deploy Documentation
-    session.install("mkdocs")
-    session.install("mkdocs-material")
-    session.run("mkdocs", "gh-deploy")
+    print("For time being install mkdocs v1.1 and mkdocs-material then run mkdocs gh-deploy")
 
     # Upload distribution to PyPi
     session.install('twine')
