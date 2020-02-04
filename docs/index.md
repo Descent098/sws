@@ -30,7 +30,7 @@ run ```pip install sws``` or ```sudo pip3 install sws```.
 You can validate it is installed properly by typing ```sws``` into your terminal, the output should look like this:
 
 ```bash
-Kieran's Useful Web Scripts; A set of python web utility scripts.
+Super Web Scripts; A command line interface, and set of scripts for web tasks.
 
 Usage:
     sws [-h] [-v]

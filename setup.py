@@ -33,7 +33,7 @@ def get_content(*filename):
 
 setuptools.setup(
     name="sws",
-    version="0.1.0",
+    version="0.1.1",
     author="Kieran Wood",
     author_email="kieran@canadiancoding.ca",
     description="A command line interface, and set of scripts for web tasks",
