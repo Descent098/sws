@@ -18,10 +18,6 @@ def build(session):
     # Create source distribution
     session.run("python", "setup.py", "sdist")
 
-    # Build Documentation
-    session.install("mkdocs")
-    session.run("mkdocs", "build")
-
     # Create wheelfile
     session.install("wheel")
     session.run("python", "setup.py", "bdist_wheel", "--universal")
@@ -38,6 +34,11 @@ def release(session):
     confirm("Have you created the release page?")
     confirm("Have you updated the readme docs?")
     
+    # Build & Deploy Documentation
+    session.install("mkdocs")
+    session.run("mkdocs", "gh-deploy")
+
+    # Upload distribution to PyPi
     session.install('twine')
     session.run("twine", "upload", "dist/*")
 
