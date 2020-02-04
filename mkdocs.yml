@@ -5,7 +5,7 @@ nav:
     - Quick Start: quick-start.md
     - Contribution Guide: contribution-guide.md
 
-theme: readthedocs
+theme: material
 
 repo_url: https://github.com/Descent098/sws
 
