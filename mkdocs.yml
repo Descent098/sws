@@ -1,0 +1,14 @@
+site_name: Super web Scripts
+
+nav:
+    - Home: index.md
+    - Quick Start: quick-start.md
+    - Contribution Guide: contribution-guide.md
+
+theme: readthedocs
+
+repo_url: https://github.com/Descent098/sws
+
+site_description: Super Web scripts documentation
+
+site_author: Kieran Wood | Descent098
