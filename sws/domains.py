@@ -4,12 +4,13 @@ import os
 import json
 import requests
 
+
 def register_key(key):
     """
     """
     with open(f"{os.path.dirname(os.path.realpath(__file__))}{os.sep}whoiskey.txt", 'w') as key_file:
-
         key_file.write(key)
+
 
 def whois_lookup(domain, key=None):
     """
@@ -24,11 +25,7 @@ def whois_lookup(domain, key=None):
         except Exception as e:
             print(f"Error when retrieving API key: {e}")
     API_ENDPOINT = f"http://api.jsonwhois.io/domain?key={key}&domain={domain}"
-    response = requests.get( API_ENDPOINT)
+    response = requests.get(API_ENDPOINT)
     response = json.loads(response.text)
-    
+
     return response
-
-
-if __name__ == "__main__":
-    print(whois_lookup("kieranwood.ca"))

@@ -11,7 +11,6 @@ usage : str
 
 # Python Standard library
 import sys
-import os
 from pprint import pprint
 
 # External Dependencies
@@ -21,7 +20,6 @@ from docopt import docopt
 from sws.youtube import download
 from sws.redirects import trace
 from sws.ssl_utilities import check_ssl_expiry, get_ssl_cert
-from sws.domains import register_key
 
 usage = """Super Web Scripts; A command line interface, and set of scripts for web tasks.
 
@@ -58,7 +56,7 @@ def main():
         if args["--trace"]: # If -t or --trace is specified
             if "https://" in args["<url>"]:
                 args["<url>"] = args["<url>"].replace("https://", "http://")
-            trace(args["<url>"], print_result=True)
+            trace(args["<url>"], [], print_result=True)
 
     if args["youtube"]:
         if not args["<path>"]:
@@ -79,5 +77,4 @@ def main():
     #         pass
     #     if args["--key"]:
     #         register_key(args["--key"])
-
 

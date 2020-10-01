@@ -23,6 +23,7 @@ HTTP Code: 200'''
 # External Dependencies
 import requests
 
+
 def trace(url:str, ignored_domains:list, print_result:bool = True) -> list:
     """Trace all redirects associated with a URL.
 
@@ -30,7 +31,7 @@ def trace(url:str, ignored_domains:list, print_result:bool = True) -> list:
     ---------
     url : str
         The URL to trace, can include or not include a protocol
-    
+
     ignored_domains : list[str]
         A list of domains (without protocols) to ignore in the trace
 
@@ -66,37 +67,38 @@ def trace(url:str, ignored_domains:list, print_result:bool = True) -> list:
     ```
     """
     # Checks if protocols are present
-    if "https://" in url: 
-        None # Continue
+    if "https://" in url:
+        None  # Continue
     elif "http://" in url:
-        None # Continue
-    else: # Add a protocol to URL
+        None  # Continue
+    else:  # Add a protocol to URL
         url = "http://" + url
 
     try:
-        trace = requests.get(url)
+        response = requests.get(url)
     except Exception as identifier:
-        if print_result == True:
+        if print_result:
             print(f"Error while checking {url} \nError Code: {identifier}")
-        return([f"Error while checking {url} \nError Code: {identifier}"])
+        return [f"Error while checking {url} \nError Code: {identifier}"]
 
-    output = [] # The result of the trace
-    if trace.history: # If the request was redirected
+    output = []  # The result of the response
+    if response.history:  # If the request was redirected
         if ignored_domains:
-            trace = _skip_ignored_domains(trace.history, ignored_domains)
-        if (print_result == True):
-            print(f"\nPrinting trace for {url}")
-        for level, redirect in enumerate(trace.history):
+            response = _skip_ignored_domains(response.history, ignored_domains)
+        if print_result:
+            print(f"\nPrinting response for {url}")
+        for level, redirect in enumerate(response.history):
             output.append([level+1, redirect.url, redirect.status_code])
-        output.append([len(output)+1,trace.url, trace.status_code])
-        if (print_result == True):
+        output.append([len(output)+1, response.url, response.status_code])
+        if print_result:
             for redirect in output:
-                print("\nRedirect level:{} \nURL: {} \nHTTP Code: {}".format(redirect[0], redirect[1], redirect[2]))
+                print(f"\nRedirect level:{redirect[0]} \nURL: {redirect[1]} \nHTTP Code: {redirect[2]}")
         return output
-    else: # If the request was not redirected
-        if (print_result == True):
+    else:  # If the request was not redirected
+        if print_result:
             print("Request was not redirected")
-        return(["Request was not redirected"])
+        return ["Request was not redirected"]
+
 
 def _skip_ignored_domains(response_trace, ignored_domains:list):
     """Takes a list of responses and removes any responses that
@@ -126,7 +128,7 @@ def _skip_ignored_domains(response_trace, ignored_domains:list):
     ```
     """
     for domain in ignored_domains:
-        for count, response in enumerate(response_trace):
+        for response in response_trace:
             if domain in response.url:
                 response_trace.remove(response)
             else:

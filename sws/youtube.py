@@ -14,6 +14,7 @@ from pytube import YouTube      # Used to download and get youtube video info
 import tkinter as tk            # Used to setup a gui for selecting files
 from tkinter import filedialog  # Used to setup a gui for selecting files
 
+
 def link_and_path():
     """Prompts user for the link to a youtube video, and path of where to download the video to"""
     video_url = input("What is the URL for the video you want to download?: ")
@@ -27,7 +28,7 @@ def link_and_path():
 
 def download(video_url:str, path:str) -> str:
     """Downloads specified video_url to path
-    
+
     Parameters
     ----------
     video_url : (str)
@@ -48,6 +49,5 @@ def download(video_url:str, path:str) -> str:
     video_title = str(YouTube(video_url).title)
     print(f"Downloading {video_title} to {path}")
     YouTube(video_url).streams.filter(subtype='mp4', progressive=True).order_by('resolution').desc().first().download(path)
-    
-    return("Downloaded {} to {} as {}.mp4".format(video_title, path, video_title))
 
+    return f"Downloaded {video_title} to {path} as {video_title}.mp4"
