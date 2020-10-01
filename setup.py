@@ -39,7 +39,7 @@ setuptools.setup(
     },
     packages=setuptools.find_packages(),
     entry_points={
-            'console_scripts': ['sws = sws.command_line_utility:main']
+            'console_scripts': ['sws = sws.cli:main']
         },
     install_requires=[
     "requests",
