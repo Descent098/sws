@@ -3,16 +3,10 @@
 This module's main function contains all the argument
 parsing for the sws script.
 
-Functions
----------
-main:
-    Primary entrypoint for the sws script.
-
 Module Variabes
 ---------------
 usage : str
     A variable that defines the argument parsing for the script in standard POSIX format.
-
 """
 
 # Python Standard library
@@ -24,10 +18,10 @@ from pprint import pprint
 from docopt import docopt
 
 # Internal Dependencies
-from .utilities.youtube import download
-from .utilities.redirects import trace
-from .utilities.ssl_utilities import check_ssl_expiry, get_ssl_cert
-from .utilities.domains import register_key
+from sws.youtube import download
+from sws.redirects import trace
+from sws.ssl_utilities import check_ssl_expiry, get_ssl_cert
+from sws.domains import register_key
 
 usage = """Super Web Scripts; A command line interface, and set of scripts for web tasks.
 
@@ -48,7 +42,7 @@ Options:
 
 def main():
     """Primary entrypoint for the sws script."""
-    args = docopt(usage, version="sws V0.0.6") # Grab arguments for parsing
+    args = docopt(usage, version="sws V0.2.0") # Grab arguments for parsing
 
     if len(sys.argv) == 1:
         print(usage)

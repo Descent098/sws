@@ -1,26 +1,18 @@
-"""Provides a simple way to download YouTube videos.
-
-Functions
----------
-download : str
-    Primary entrypoint for the sws script.
-
-link_and_path:
-    Don't use this function (janky).
-
+"""Provides a simple way to download & get metadata of YouTube videos
 
 Examples
 --------
+### Download youtube video to current folder
 ```
->> from sws.utilities.youtube import download
+from sws.youtube import download
 
->> download("https://www.youtube.com/watch?v=6j1I3mC0BR0", ".") # Downloads video in current folder
+download("https://www.youtube.com/watch?v=6j1I3mC0BR0", ".") # Downloads video in current folder
 ```
 """
 
-from pytube import YouTube
-import tkinter as tk
-from tkinter import filedialog
+from pytube import YouTube      # Used to download and get youtube video info
+import tkinter as tk            # Used to setup a gui for selecting files
+from tkinter import filedialog  # Used to setup a gui for selecting files
 
 def link_and_path():
     """Prompts user for the link to a youtube video, and path of where to download the video to"""
@@ -33,7 +25,7 @@ def link_and_path():
     return video_url, file_path
 
 
-def download(video_url, path):
+def download(video_url:str, path:str) -> str:
     """Downloads specified video_url to path
     
     Parameters
@@ -46,10 +38,11 @@ def download(video_url, path):
 
     Examples
     --------
+    Download youtube video to current folder
     ```
-    >> from sws.utilities.youtube import download
+    from sws.youtube import download
 
-    >> download("https://www.youtube.com/watch?v=6j1I3mC0BR0", ".") # Downloads video in current folder
+    download("https://www.youtube.com/watch?v=6j1I3mC0BR0", ".") # Downloads video in current folder
     ```
     """
     video_title = str(YouTube(video_url).title)
