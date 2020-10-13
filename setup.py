@@ -45,6 +45,8 @@ setuptools.setup(
     "requests",
     "pytube3",
     "docopt",
+    "pystall",
+    "python-whois-extended",
     ],
     extras_require = {
         "dev" : ["nox",   # Used to run automated processes
