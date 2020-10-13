@@ -13,7 +13,6 @@ usage : str
 import sys                       # Used to validate arguments are given at the command line
 from pprint import pprint        # Used to pretty-print to command line
 
-
 # External Dependencies
 from docopt import docopt        # Used to parse CLI arguments
 

@@ -74,6 +74,7 @@ def trace(url:str, ignored_domains:list, print_result:bool = True) -> list:
     else:  # Add a protocol to URL
         url = "http://" + url
 
+    # Try going to the provided URL
     try:
         response = requests.get(url)
     except Exception as identifier:
@@ -84,7 +85,7 @@ def trace(url:str, ignored_domains:list, print_result:bool = True) -> list:
     output = []  # The result of the response
     if response.history:  # If the request was redirected
         if ignored_domains:
-            response = _skip_ignored_domains(response.history, ignored_domains)
+            response.history = _skip_ignored_domains(response.history, ignored_domains)
         if print_result:
             print(f"\nPrinting response for {url}")
         for level, redirect in enumerate(response.history):
@@ -100,7 +101,7 @@ def trace(url:str, ignored_domains:list, print_result:bool = True) -> list:
         return ["Request was not redirected"]
 
 
-def _skip_ignored_domains(response_trace, ignored_domains:list):
+def _skip_ignored_domains(response_trace:list, ignored_domains:list) -> list:
     """Takes a list of responses and removes any responses that
     have domains that are in the ignored_domains variable
 

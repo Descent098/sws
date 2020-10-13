@@ -1,7 +1,7 @@
 """A module for dealing with getting domain information such as:
 
 - If a domain is available
-- WHo a domain is registered with
+- Who a domain is registered with
 - Other domain details such as, creation_date, name_servers etc.
 
 Notes
@@ -54,7 +54,7 @@ from pystall.core import build, ZIPResource, _add_to_path
 
 
 def get_domain_info(domain:str) -> dict:
-    """[summary]
+    """Returns a dictionary of all domain information
 
     Parameters
     ----------
