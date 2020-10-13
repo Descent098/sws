@@ -44,12 +44,26 @@ pprint(get_ssl_cert('kieranwood.ca'))
     'version': 3}
 '''
 ```
+
+### Get issuer details of existing hostname
+```
+from sws.ssl_utilities import get_ssl_issuer
+
+get_ssl_issuer("kieranwood.ca") # Returns [('countryName', 'US'), ('organizationName', 'Cloudflare, Inc.'), ('commonName', 'Cloudflare Inc ECC CA-3')]
+```
+
+### Get issuer details of non-existing hostname
+```
+from sws.ssl_utilities import get_ssl_issuer
+
+get_ssl_issuer("kieranwood.com") # Returns False
+```
 """
 
 # Internal Dependencies
 import ssl                      # Used to get details about SSL certs
 import socket                   # Used to make a request to get SSL cert
-
+from typing import Union
 
 def check_ssl_expiry(hostname:str) -> str:
     """Allows you to check the SSL expiry for a FQDN;
@@ -87,7 +101,7 @@ def get_ssl_cert(hostname:str) -> dict:
     Arguments
     ---------
     hostname : str
-        A string of a FQDN (root URL with no protocol) for example 'kieranwood.ca'.
+        A string of a FQDN (root URL with no protocol) for example 'kieranwood.ca'
 
     Returns
     -------
@@ -129,6 +143,12 @@ def get_ssl_cert(hostname:str) -> dict:
     '''
     ```
     """
+    # Strip protocols from hostname if they exist
+    if hostname.startswith("http://"):
+        hostname = hostname[7::]
+    elif hostname.startswith("https://"):
+        hostname = hostname[8::]
+
     context_socket = _get_ssl_socket(hostname)
     context_socket.connect((hostname, 443))  # Connects to the host over a socket
     cert = context_socket.getpeercert()  # Dictionary containing all the certificate information
@@ -136,9 +156,42 @@ def get_ssl_cert(hostname:str) -> dict:
     return cert
 
 
-def get_ssl_issuer() -> str:
-    #TODO
-    pass
+def get_ssl_issuer(hostname:str) -> Union[list, bool]:
+    """Get's the details for the issuer of the hostname's SSL cert
+
+    Parameters
+    ----------
+    hostname : str
+        The hostname you want to get the issuer for
+
+    Returns
+    -------
+    list[tuple[str,str]] or False
+        Returns a list of tuples with details about the SSL issuer,
+        or False if there is no SSL cert for associated domain
+
+    Examples
+    --------
+    Get details of existing hostname
+    ```
+    from sws.ssl_utilities import get_ssl_issuer
+
+    get_ssl_issuer("kieranwood.ca") # Returns [('countryName', 'US'), ('organizationName', 'Cloudflare, Inc.'), ('commonName', 'Cloudflare Inc ECC CA-3')]
+    ```
+
+    Get details of non-existing hostname
+    ```
+    from sws.ssl_utilities import get_ssl_issuer
+
+    get_ssl_issuer("kieranwood.com") # Returns False
+    ```
+    """
+    cert = get_ssl_cert(hostname)
+    if cert["issuer"]:
+        issuer = [data[0] for data in cert["issuer"]]
+        return issuer
+    else:
+        return False
 
 
 def _get_ssl_socket(hostname:str) -> ssl.SSLSocket:
@@ -153,7 +206,7 @@ def _get_ssl_socket(hostname:str) -> ssl.SSLSocket:
     -------
     SSLSocket:
         A socket that can be used to connect to the hostname
-        
+
     Examples
     --------
     ```
