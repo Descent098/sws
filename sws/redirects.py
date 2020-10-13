@@ -24,7 +24,7 @@ HTTP Code: 200'''
 import requests
 
 
-def trace(url:str, ignored_domains:list, print_result:bool = True) -> list:
+def trace(url: str, ignored_domains: list, print_result: bool = True) -> list:
     """Trace all redirects associated with a URL.
 
     Arguments
@@ -101,7 +101,7 @@ def trace(url:str, ignored_domains:list, print_result:bool = True) -> list:
         return ["Request was not redirected"]
 
 
-def _skip_ignored_domains(response_trace:list, ignored_domains:list) -> list:
+def _skip_ignored_domains(response_trace: list, ignored_domains: list) -> list:
     """Takes a list of responses and removes any responses that
     have domains that are in the ignored_domains variable
 

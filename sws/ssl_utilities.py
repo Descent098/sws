@@ -65,7 +65,8 @@ import ssl                      # Used to get details about SSL certs
 import socket                   # Used to make a request to get SSL cert
 from typing import Union
 
-def check_ssl_expiry(hostname:str) -> str:
+
+def check_ssl_expiry(hostname: str) -> str:
     """Allows you to check the SSL expiry for a FQDN;
     More specifically it will return the notAfter for the SSL cert associated with the FQDN.
 
@@ -95,7 +96,7 @@ def check_ssl_expiry(hostname:str) -> str:
     return expiry_date
 
 
-def get_ssl_cert(hostname:str) -> dict:
+def get_ssl_cert(hostname: str) -> dict:
     """Returns all available SSL information, such as notAfter, commonName etc.
 
     Arguments
@@ -156,7 +157,7 @@ def get_ssl_cert(hostname:str) -> dict:
     return cert
 
 
-def get_ssl_issuer(hostname:str) -> Union[list, bool]:
+def get_ssl_issuer(hostname: str) -> Union[list, bool]:
     """Get's the details for the issuer of the hostname's SSL cert
 
     Parameters
@@ -194,7 +195,7 @@ def get_ssl_issuer(hostname:str) -> Union[list, bool]:
         return False
 
 
-def _get_ssl_socket(hostname:str) -> ssl.SSLSocket:
+def _get_ssl_socket(hostname: str) -> ssl.SSLSocket:
     """Get's the context for a host over SSL
 
     Parameters

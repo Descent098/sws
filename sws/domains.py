@@ -37,12 +37,13 @@ print(get_domain_info('kieranwood.com')) # {'creation_date': False, 'expiration_
 ```
 from sws.domains import get_domain_info
 
-print(get_domain_info('kieranwood.ca')) # {'creation_date': datetime.datetime(2018, 11, 6, 5, 9, 47), 'expiration_date': datetime.datetime(2020, 11, 6, 5, 9, 47), 'last_updated': datetime.datetime(2020, 1, 8, 8, 9, 44), 'name': 'kieranwood.ca', 'name_servers': {'kevin.ns.cloudflare.com\r', 'sharon.ns.cloudflare.com\r'}, 'registrant_cc': 'redacted for privacy', 'registrar': 'Go Daddy Domains Canada, Inc'}
+print(get_domain_info('kieranwood.ca')) # {'creation_date': datetime.datetime(2018, 11, 6, 5, 9, 47), 'expiration_date': datetime.datetime(2020, 11, 6, 5, 9, 47), 'last_updated': datetime.datetime(2020, 1, 8, 8, 9, 44), 'name': 'kieranwood.ca', 'name_servers': {'kevin.ns.cloudflare.com', 'sharon.ns.cloudflare.com'}, 'registrant_cc': 'redacted for privacy', 'registrar': 'Go Daddy Domains Canada, Inc'}
 ```
 
 """
 
 import os
+import sys
 import subprocess
 from shutil import move
 from datetime import datetime
@@ -50,10 +51,10 @@ from calendar import month_name
 
 # Third Party Dependencies
 import whois
-from pystall.core import build, ZIPResource, _add_to_path
+from pystall.core import build, ZIPResource, _add_to_path, APTResource
 
 
-def get_domain_info(domain:str) -> dict:
+def get_domain_info(domain: str) -> dict:
     """Returns a dictionary of all domain information
 
     Parameters
@@ -83,24 +84,24 @@ def get_domain_info(domain:str) -> dict:
     ```
     from sws.domains import get_domain_info
 
-    print(get_domain_info('kieranwood.ca')) # {'creation_date': datetime.datetime(2018, 11, 6, 5, 9, 47), 'expiration_date': datetime.datetime(2020, 11, 6, 5, 9, 47), 'last_updated': datetime.datetime(2020, 1, 8, 8, 9, 44), 'name': 'kieranwood.ca', 'name_servers': {'kevin.ns.cloudflare.com\r', 'sharon.ns.cloudflare.com\r'}, 'registrant_cc': 'redacted for privacy', 'registrar': 'Go Daddy Domains Canada, Inc'}
+    print(get_domain_info('kieranwood.ca')) # {'creation_date': datetime.datetime(2018, 11, 6, 5, 9, 47), 'expiration_date': datetime.datetime(2020, 11, 6, 5, 9, 47), 'last_updated': datetime.datetime(2020, 1, 8, 8, 9, 44), 'name': 'kieranwood.ca', 'name_servers': {'kevin.ns.cloudflare.com', 'sharon.ns.cloudflare.com'}, 'registrant_cc': 'redacted for privacy', 'registrar': 'Go Daddy Domains Canada, Inc'}
     ```
     """
     _install_whois()  # Verify/install whois
     domain = whois.query(domain)
     if not domain:  # If the domain is not registered
         return {'creation_date': False,
-    'expiration_date': False,
-    'last_updated': False,
-    'name': domain,
-    'name_servers': False,
-    'registrant_cc': False,
-    'registrar': False}
+                'expiration_date': False,
+                'last_updated': False,
+                'name': domain,
+                'name_servers': False,
+                'registrant_cc': False,
+                'registrar': False}
     else:  # If there was domain info
         return vars(domain)
 
 
-def domain_availability(domain_query:dict) -> tuple:
+def domain_availability(domain_query: dict) -> tuple:
     """Checks the availability of a domain
 
     Parameters
@@ -148,13 +149,13 @@ def _install_whois():
         INSTALL_FOLDER = f"{os.getenv('HOME')}/whois"
     if not os.path.exists(INSTALL_FOLDER):
         try:
-            subprocess.Popen("whois")
+            subprocess.Popen("whois")  # Check if binary is installed
         except FileNotFoundError:
-            if os.name == "nt":
-                build(ZIPResource("whois", "https://download.sysinternals.com/files/WhoIs.zip", overwrite_agreement = True))
+            if os.name == "nt":  # Install windows version of whois
+                build(ZIPResource("whois", "https://download.sysinternals.com/files/WhoIs.zip", overwrite_agreement=True))
                 move(f"{DOWNLOAD_FOLDER}{os.sep}whois", INSTALL_FOLDER)
                 _add_to_path(INSTALL_FOLDER)
                 print("Whois has been installed, restart script")
-                exit()
-            else:
-                ...  #TODO: Figure out linux installation
+                sys.exit()
+            else: # Linux Installation
+                build(APTResource("whois", "whois", overwrite_agreement=True))

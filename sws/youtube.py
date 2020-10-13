@@ -26,7 +26,7 @@ def link_and_path():
     return video_url, file_path
 
 
-def download(video_url:str, path:str) -> str:
+def download(video_url: str, path: str) -> str:
     """Downloads specified video_url to path
 
     Parameters

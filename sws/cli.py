@@ -10,17 +10,17 @@ usage : str
 """
 
 # Python Standard library
-import sys                       # Used to validate arguments are given at the command line
-from pprint import pprint        # Used to pretty-print to command line
+import sys                        # Used to validate arguments are given at the command line
+from pprint import pprint         # Used to pretty-print to command line
 
 # External Dependencies
-from docopt import docopt        # Used to parse CLI arguments
+from docopt import docopt         # Used to parse CLI arguments
 
 # Internal Dependencies
-from sws.domains import *        # Import domain utilities
-from sws.ssl_utilities import *  # Import SSL utilities
-from sws.redirects import trace  # Import redirect utilities
-from sws.youtube import download # Import youtube utilities
+from sws.domains import *         # Import domain utilities
+from sws.ssl_utilities import *   # Import SSL utilities
+from sws.redirects import trace   # Import redirect utilities
+from sws.youtube import download  # Import youtube utilities
 
 usage = """Super Web Scripts; A command line interface, and set of scripts for web tasks.
 
@@ -46,7 +46,7 @@ def main():
     """Primary entrypoint for the sws script."""
     args = docopt(usage, version="sws V0.2.0")  # Grab arguments for parsing
 
-    if len(sys.argv) == 1: # if no arguments are provided
+    if len(sys.argv) == 1:  # if no arguments are provided
         print(usage)
 
     if args["ssl"]:  # Begin parsing for ssl subcommand
