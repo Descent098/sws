@@ -1,4 +1,4 @@
-"""Utilities to get information about http redirects
+"""Provides a function for tracing redirects
 
 Examples
 --------
@@ -20,11 +20,14 @@ HTTP Code: 200'''
 ```
 """
 
+# Standard library Dependencies
+from typing import Union        # Used for type hints with multiple types
+
 # External Dependencies
-import requests
+import requests                 # Used to make http requests for redirect tracing
 
 
-def trace(url: str, ignored_domains: list, print_result: bool = True) -> list:
+def trace(url: str, ignored_domains: Union[list, bool], print_result: bool = True) -> list:
     """Trace all redirects associated with a URL.
 
     Arguments
@@ -32,8 +35,9 @@ def trace(url: str, ignored_domains: list, print_result: bool = True) -> list:
     url : str
         The URL to trace, can include or not include a protocol
 
-    ignored_domains : list[str]
-        A list of domains (without protocols) to ignore in the trace
+    ignored_domains : list[str] or bool
+        A list of domains (without protocols) to ignore in the trace; False
+        can be passed in if no domains should be ignored
 
     print_result : bool
         If true then the value will be printed in a human readable format
@@ -68,9 +72,9 @@ def trace(url: str, ignored_domains: list, print_result: bool = True) -> list:
     """
     # Checks if protocols are present
     if "https://" in url:
-        None  # Continue
+        ...  # Continue
     elif "http://" in url:
-        None  # Continue
+        ...  # Continue
     else:  # Add a protocol to URL
         url = "http://" + url
 
@@ -128,6 +132,7 @@ def _skip_ignored_domains(response_trace: list, ignored_domains: list) -> list:
     trace('kieranwood.ca', ["safelinks.protection.outlook.com", "can01.safelinks.protection.outlook.com"], print_result = True)
     ```
     """
+    # Remove instances of ignored domains from the response trace
     for domain in ignored_domains:
         for response in response_trace:
             if domain in response.url:

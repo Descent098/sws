@@ -1,7 +1,12 @@
 """Get deails about the ssl cert of a hostname such as:
+
 - When the cert will expire
 - The issuer of the cert
 - A full dict of the details of the cert
+
+Notes
+-----
+- You should use an FQDN for any ssl_utilties functions, so something like https://www.google.ca becomes google.ca
 
 Examples
 --------

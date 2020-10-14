@@ -9,7 +9,7 @@ Notes
 - If whois is not installed, the package/executable will be installed
 
 Examples
------------
+--------
 ### Getting details about an available domain
 ```
 from sws.domains import get_domain_info, domain_availability
@@ -39,19 +39,19 @@ from sws.domains import get_domain_info
 
 print(get_domain_info('kieranwood.ca')) # {'creation_date': datetime.datetime(2018, 11, 6, 5, 9, 47), 'expiration_date': datetime.datetime(2020, 11, 6, 5, 9, 47), 'last_updated': datetime.datetime(2020, 1, 8, 8, 9, 44), 'name': 'kieranwood.ca', 'name_servers': {'kevin.ns.cloudflare.com', 'sharon.ns.cloudflare.com'}, 'registrant_cc': 'redacted for privacy', 'registrar': 'Go Daddy Domains Canada, Inc'}
 ```
-
 """
 
-import os
-import sys
-import subprocess
-from shutil import move
-from datetime import datetime
-from calendar import month_name
+# Standard Library Dependencies
+import os                        # Used for path manipulation
+import sys                       # Used to exit safely during errors
+import subprocess                # Used to execute existing binaries
+from shutil import move          # Used to move folders within the os
+from datetime import datetime    # Used for interpreting dates and times
+from calendar import month_name  # Used to convert integer month representations to string representations
 
 # Third Party Dependencies
-import whois
-from pystall.core import build, ZIPResource, _add_to_path, APTResource
+import whois  # Used to pull domain information
+from pystall.core import build, ZIPResource, _add_to_path, APTResource  # Used to install whois binary
 
 
 def get_domain_info(domain: str) -> dict:
@@ -140,6 +140,7 @@ def domain_availability(domain_query: dict) -> tuple:
 
 
 def _install_whois():
+    """Used to install whois binary if it isn't available"""
     # Setting up default downloads folder based on OS
     if os.name == "nt":
         DOWNLOAD_FOLDER = f"{os.getenv('USERPROFILE')}\\Downloads"
@@ -157,5 +158,5 @@ def _install_whois():
                 _add_to_path(INSTALL_FOLDER)
                 print("Whois has been installed, restart script")
                 sys.exit()
-            else: # Linux Installation
+            else:  # Linux Installation
                 build(APTResource("whois", "whois", overwrite_agreement=True))
