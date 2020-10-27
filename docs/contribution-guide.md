@@ -1,164 +1,110 @@
-# Contribution Guide
+# Development-Contribution guide
 
-If you are interested in contributing to sws (thanks by the way) then this guide should give you all you need to get started. There will be info about sws ' structure, guiding principles, code style information, and more.
+## Installing development dependencies
 
+There are a few dependencies you will need to use this package fully, they are specified in the extras require parameter in setup.py but you can install them manually:
 
+```
+nox   	# Used to run automated processes
+pytest 	# Used to run the test code in the tests directory
+mkdocs	# Used to create HTML versions of the markdown docs in the docs directory
+pdoc3   # Used to generate API documentation
+```
 
-## Code style
+Just go through and run ```pip install <name>``` or ```sudo pip3 install <name>```. These dependencies will help you to automate documentation creation, testing, and build + distribution (through PyPi) automation.
 
-Here is everything you need to know about writing code that matches the style of the existing codebase.
+## Building "API" docs
 
+API docs are useful if you want an easily navigatable version of the in-line documentation. 
+The best way to do this currently is to:
+1.  download [pdoc3](https://pdoc3.github.io/pdoc/doc/pdoc/); ```pip install pdoc3``` 
+2.  Install your current sws code by going to the root directory and running ```pip install .```
+3.  Run ````pdoc sws --http localhost:8080```
+4.  Go to a browser and type in [http://localhost:8080/sws](http://localhost:8080/sws).
 
+## Building "user" docs
 
-#### Variable names
+User docs detail primarily the CLI usage. To build them locally install mkdocs and run ```mkdocs serve``` on the root directory and navigate to [http://localhost:8000](http://localhost:8000)
 
-There is really only 1 rule for variable names:
+## Nox integration
 
+If you have never used [nox](https://nox.readthedocs.io/) before it is a great system for automating tedius tasks (builds, distributions, testing etc). This project uses nox for a number of things and in the following sections I will explain each. 
 
+## Running tests
 
-**DO NOT INCLUDE SINGLE CHARACTER VARIABLE NAMES!**
+Testing is implemented using [pytest](https://docs.pytest.org/en/latest/), and can be run 1 of 2 ways:
 
+1. Run the tests through nox using ```nox -s tests```, this will automatically run the tests against python 3.5-3.8 (assuming they are installed on system).
+2. Go to the root directory and run ```pytest```, this should automatically detect the /tests folder and run all tests.
 
+## Building the package
 
-This makes things so much more difficult to debug that it often ends up being better to just re-implement, keep things short, simple, readable and idiomatic. 
+This is not necessary for pull requests, or even development but if you want to validate that it doesn't break buildability here is how to do it. You can use ```nox -s build```, this will create a source distribution for you using pythons [setuptools module](https://setuptools.readthedocs.io/en/latest/).
 
+## Pull requests and issues guide
 
+### TLDR
 
-#### Linting
+1. Commenting/documentaion is **not** optional
+2. Breaking platform compatability is **not** acceptable
+3. Do **everything** through [github](https://github.com/Descent098/sws) (don't email me), and (mostly) everything has been setup for you.
 
-Currently there is no strict linting enforced, but be reasonable. [PEP-8](https://www.python.org/dev/peps/pep-0008/) is a good source to follow, but not required. In the future something like [black](https://black.readthedocs.io/en/stable/) or [flake8](http://flake8.pycqa.org/en/latest/) may be implemented, but not yet.
+### Bug Reports & Feature Requests
 
+Submit all bug reports and feature requests on [github](https://github.com/Descent098/sws/issues/new/choose), the format for each is pre-defined so just follow the outlined format
 
+### Pull requests
 
-#### In-Line Documentation
+Pull requests should be submitted through github and follow the default pull request template specified. If you want the rundown of what needs to be present:
 
-At a minimum your code must include docstrings for any functions, and inline code for any module global variables (though these should be avoided anyway). The typical format followed is the [numpystyle docstrings](https://numpydoc.readthedocs.io/en/latest/format.html#class-docstring) with at least the attributes, methods, examples, returns/yields and notes sections (where applicable) for both classes and functions.
+1. Provide a clear explination of what you are doing/fixing
+2. Feature is tested on Windows & *nix (unless explicitly incompatable)
+3. All Classes, modules, and functions must have docstrings that follow the [numpy-style guide](https://numpydoc.readthedocs.io/en/latest/format.html).
+4. Unless feature is essential it cannot break backwards compatability
 
+## Folder Structure
 
+*A Brief explanation of how the project is set up for people trying to get into developing for it*
 
-Ideally you should also include an in-line comment if you are doing any nested iteration, conditionals, or combinations of both, that just quickly explains what's going on.
+### /sws
 
+Contains all of the modules that implement the functionality for the CLI and API.
 
+### /docs
 
-## Guiding principles
+*Contains markdown source files to be used with [mkdocs](https://www.mkdocs.org/) to create html/pdf documentation.* 
 
-Here are some of the principles that sws is built on, before submitting a pull request make sure your feature is in line with them (you can also submit an issue to ask before writing it).
+**Before you can use this you will need to setup the mkdocs.yml file **
 
+### /tests
 
+*Contains tests to be run before release* 
 
-#### Goals
+### Root Directory
 
-1. Provide an easy to use cli that saves you writing bash scripts every time you want to do common tasks.
-2. Provide an extensible API that can be implemented in other projects.
+**setup.py**: Contains all the configuration for installing the package via pip.
 
+**LICENSE**: This file contains the licensing information about the project.
 
+**CHANGELOG.md**: Used to create a changelog of features you add, bugs fixed for each release
 
-Also take a look at the [what is sws?](/en/latest#what-is-sws?) section of the homepage.
+**CONTRIBUTING.md**: Contains development details for how to contribute to sws
 
+**mkdocs.yml**: Used to specify how to build documentation from the source markdown files.
 
-
-#### Bug Tracking & Roadmap
-
-The bug tracking and overall roadmap can be found in the [project page on github](https://github.com/Descent098/sws/projects/1). If you are looking to submit a bug report, feature request, or pull request please go through [the github issues page](https://github.com/Descent098/sws/issues).
-
-
-
-## Source File/Folder Structure
-
-Here is the layout and functions for all the files/folders in the project. I have split it up between functionality, testing/documentation, and Metadata/Manifest files.
-
-
-
-### Functionality
-
-All the code that comprises sws' functionality is found in /sws and in the following files:
-
-
-
-#### /sws/command_line_utility.py
-
-Includes the code for the ```sws``` command.
-
-
-
-#### /sws/utilities
-
-The files in this folder include all the primary logic used by the ```sws``` command.
-
-
-
-### Testing & Documentation
-
-These files comprise the testing suite (implemented in [pytest](https://docs.pytest.org/en/latest/)) and the documentation source files (implemented with [mkdocs](https://www.mkdocs.org/)).
-
-
-
-#### /tests
-
-This folder contains all the testing files, currently there is only one ```primary_test.py``` which runs a slough of functionality tests.
-
-
-
-#### /docs
-
-Includes all the source documentation files for this website (written in markdown and built to HTML using [mkdocs](https://www.mkdocs.org/)).
-
-
-
-#### CHANGELOG.md
-
-A chronological list of changes made in various versions of sws, along with their respective **public** release dates.
-
-
-
-#### README.md
-
-A file used by github to give a bit of a blurb about using sws for those who don't want to read the real documentation (good on you by the way).
-
-
-
-### Metadata/Manifest files
-
-These are files for doing various maintenance tasks, and storing configurations for different development utilities.
-
-
-
-#### .gitignore
-
-This file is used to specify which files should not include
-
-
-
-#### LICENSE
-
-This file contains the licensing information about the project, which in this case is [MIT](https://choosealicense.com/licenses/mit/).
-
-
-
-#### noxfile.py
-
-Used to configure various automated processes using [nox](https://nox.readthedocs.io/en/stable/), these include:
+**noxfile.py**: Used to configure various automated processes using [nox](https://nox.readthedocs.io/en/stable/), these include;
 
 - Building release distributions
 - Releasing distributions on PyPi
-- Running test suite against a number of python versions (3.5-current)
-
-
+- Running test suite agains a number of python versions (3.5-current)
 
 If anything to do with deployment or releases is failing, this is likely the suspect.
 
+There are 4 main sessions built into the noxfile and they can be run using ```nox -s <session name>``` i.e. ```nox -s test```:
 
+- build: Creates a source distribution, builds the markdown docs to html, and creates a universal wheel distribution for PyPi.
+- release: First runs the build session, then asks you to confirm all the pre-release steps have been completed, then runs *twine* to upload to PyPi
+- test: Runs the tests specified in /tests using pytest, and runs it on python versions 3.5-3.8 (assuming they are installed)
+- docs: Serves the docs on a local http server so you can validate they have the content you want without having to fully build them.
 
-#### setup.py
-
-Manifest information for defining sws as a python package. Includes metadata about the package such as version number, the CLI entrypoint, specification of standard installation (and development installation) dependencies, and other metadata required by PyPi.
-
-
-
-If you need to modify how python installs sws, this is the file to start with.
-
-
-
-#### /sws/\_\_init\_\_.py & /sws/utilities/\_\_init\_\_.py
-
-This file is used by python to define the /sws & /sws/utilities folder as a python package. You should never need to modify it.
+**.gitignore**: A preconfigured gitignore file (info on .gitignore files can be found here: https://www.atlassian.com/git/tutorials/saving-changes/gitignore)

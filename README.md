@@ -27,7 +27,7 @@ A command line interface, and set of scripts for common web tasks.
 
 API Documentation can be found at [https://kieranwood.ca/sws/](https://kieranwood.ca/sws/)
 
-User Documentation can be found at [https://sws.readthedocs.io](https://sws.readthedocs.io)
+User Documentation for the cli can be found at [https://sws.readthedocs.io](https://sws.readthedocs.io)
 
 ## What does sws do?
 
