@@ -21,15 +21,18 @@ from sws.domains import *         # Import all domains utilities
 from sws.youtube import *         # Import all youtube utilities
 from sws.ssl_utilities import *   # Import all ssl_utilties functions
 from sws.redirects import trace   # Import trace from redirect utilities
+from sws.dns_utilities import *   # Import all dns utilitites
 
 usage = """Super Web Scripts; A command line interface, and set of scripts for web tasks.
 
 Usage:
     sws [-h] [-v]
+    sws dns <domain> [-t]
     sws youtube <url> [<path>]
     sws ssl <hostname> [-e] [-c]
     sws redirects <url> [<ignored>]
-    sws domains <domain> [-e] [-r] [-d] [-a] [-t]
+    sws domains <domain> [-e] [-r] [-d] [-a]
+    
 
 Options:
     -h --help               Show this help message and exit
@@ -39,6 +42,7 @@ Options:
     -r --registrar          Tells you who the domain is registered through
     -d --details            If specified will show full domain details
     -a --available          Gives information on whether a specific domain is available
+    -t --table              Print the table form of output
 """
 
 def main():
@@ -48,23 +52,28 @@ def main():
     if len(sys.argv) == 1:  # if no arguments are provided
         print(usage)
 
-    if args["ssl"]:  # Begin parsing for ssl subcommand
+    if args["dns"]:
+        dns_dict = get_dns_records(args['<domain>'], as_dict=True)
+
+        print(dns_result_table(args['<domain>'], dns_dict))
+
+    elif args["ssl"]:  # Begin parsing for ssl subcommand
         if args["--expiry"]:  # If -e or --expiry is specified
             print(f"Domain {args['<hostname>']} Expires on: {check_ssl_expiry(args['<hostname>'])}")
         if args["--cert"]:  # If -c or --cert is specified
             pprint(get_ssl_cert(args['<hostname>']))
 
-    if args["redirects"]:  # Begin parsing for redirects subcommand
+    elif args["redirects"]:  # Begin parsing for redirects subcommand
         print(args["<ignored>"])
         if args["<ignored>"]:
             if args["<ignored>"].startswith("["):
                 args["<ignored>"] = list(args["<ignored>"])
         trace(args["<url>"], args["<ignored>"], print_result=True)
 
-    if args["youtube"]:
+    elif args["youtube"]:
         download(args["<url>"], args["<path>"])
 
-    if args["domains"]:  # Begin parsing for ssl subcommand
+    elif args["domains"]:  # Begin parsing for ssl subcommand
         domain_details = get_domain_info(args["<domain>"])
         if args["--expiry"]:  # If -e or --expiry is specified
             pprint(domain_details["expiration_date"])
@@ -77,3 +86,6 @@ def main():
             pprint(domain_details)
         if args["--available"]:
             print(domain_availability(domain_details)[0])
+
+    else:
+        print(usage)

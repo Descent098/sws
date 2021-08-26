@@ -47,6 +47,7 @@ setuptools.setup(
     "docopt",
     "pystall",
     "python-whois-extended",
+    "dnspython",
     ],
     extras_require = {
         "dev" : ["nox",   # Used to run automated processes

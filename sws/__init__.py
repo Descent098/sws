@@ -29,6 +29,9 @@ A module for dealing with getting domain information such as:
 - Who a domain is registered with
 - Other domain details such as, creation_date, name_servers etc.
 
+### dns_utilities
+A module for getting DNS configurations on a domain
+
 ### redirects
 Provides a function for tracing redirects
 
