@@ -27,7 +27,7 @@ usage = """Super Web Scripts; A command line interface, and set of scripts for w
 
 Usage:
     sws [-h] [-v]
-    sws dns <domain> [-t]
+    sws dns <domain>
     sws youtube <url> [<path>]
     sws ssl <hostname> [-e] [-c]
     sws redirects <url> [<ignored>]
@@ -42,7 +42,6 @@ Options:
     -r --registrar          Tells you who the domain is registered through
     -d --details            If specified will show full domain details
     -a --available          Gives information on whether a specific domain is available
-    -t --table              Print the table form of output
 """
 
 def main():
