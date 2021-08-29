@@ -13,6 +13,7 @@ Features:
 - Added ```downloads`` module to make handling downlaods simpler
 - Added ```loadtest``` module and command
 - Added ```framework``` module and command
+- Added `__main__.py` file for direct cli invocation (`python -m sws`)
 
 Documentation Improvements:
 - Added additional source, docs, and roadmap links to ```setup.py``` for PyPi
