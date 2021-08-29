@@ -23,6 +23,14 @@ def test_valid_url():
 
 
 def test_invalid_url():
+    # URL with no download
     with pytest.raises(ValueError):
-        test_download = Download("https://github.com/Descent098/sws/archive/master.zip")
+        Download("https://github.com")
 
+    # 404 URL
+    with pytest.raises(ValueError):
+        Download("https://kieranwood.ca/yeetyeet.pdf")
+
+    # Non existent site
+    with pytest.raises(ValueError):
+        Download("https://asdlfjkhasldkjfhasdflgkhsdaflghasdlkjfgadfsohjgfhasdl.ca/yeetyeet.pdf")
