@@ -1,8 +1,25 @@
-"""A module for getting DNS configurations on a domain"""
-from typing import Dict, List, Tuple, Union
-import dns.resolver
-import dns.rdatatype
-import math
+"""A module for getting DNS configurations on a domain
+
+Notes
+-----
+- If http or https is passed to any function it will be stripped
+
+Examples
+--------
+### Printing the values of 'kieranwood.ca' when as_dict is True
+```
+from sws.dns_utilities import get_dns_records
+
+print(get_dns_records("kieranwood.ca", as_dict=True)) # {'A': ['104.21.47.45', '172.67.144.116'], 'SOA': 'kevin.ns.cloudflare.com. dns.cloudflare.com. 2036568886 10000 2400 604800 3600'}
+```
+"""
+# Standard Library Dependencies
+from math import floor, ceil                # Used to normalize padding
+from typing import Dict, List, Tuple, Union # Used to provide useful typehints in functions
+
+# Third Party Library Dependencies
+import dns.resolver     # Used to get domain information
+import dns.rdatatype    # Used to determine record types
 
 # Includes deprecated record types (more canonical)
 RECORD_TYPES = dns.rdatatype.RdataType
@@ -74,7 +91,7 @@ RECORD_TYPES_TUPLE:Tuple[str] = (
 )
 
 def get_dns_records(domain:str, as_dict:bool=False) -> Union[List[str], Dict[str, Union[str, List[str]]]]:
-    """[summary]
+    """Takes in a domain and returns either a list or dictionary of the records of the domain
 
     Notes
     -----
@@ -115,6 +132,11 @@ def get_dns_records(domain:str, as_dict:bool=False) -> Union[List[str], Dict[str
     print(get_dns_records("kieranwood.ca", as_dict=True)) # {'A': ['104.21.47.45', '172.67.144.116'], 'SOA': 'kevin.ns.cloudflare.com. dns.cloudflare.com. 2036568886 10000 2400 604800 3600'}
     ```
     """
+    if domain.startswith("https://"):
+        domain = domain.replace("https://", "")
+    elif domain.startswith("http://"):
+        domain = domain.replace("http://", "")
+        
     if as_dict:
         result = {}
         for record_type in RECORD_TYPES:
@@ -166,7 +188,10 @@ def dns_result_table(domain:str, dns_dict:dict) -> str:
     str
         A table of dns records and their values for the domain
     """    
-
+    if domain.startswith("https://"):
+        domain = domain.replace("https://", "")
+    elif domain.startswith("http://"):
+        domain = domain.replace("http://", "")
     # add header
     result = f"""\nDNS records for {domain} \n
 | Record Type | Record Value |
@@ -246,8 +271,8 @@ def _even_padding(value:str, size:int, spacer:str= " ") -> str:
         return value
     padding = abs(len(value) - size)/2
     if not padding.is_integer():
-        padding_left = spacer * math.floor(padding)
-        padding_right = spacer * math.ceil(padding)
+        padding_left = spacer * floor(padding)
+        padding_right = spacer * ceil(padding)
     else:
         padding_left = spacer * int(padding)
         padding_right = spacer * int(padding)

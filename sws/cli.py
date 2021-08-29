@@ -23,7 +23,7 @@ from sws.ssl_utilities import *   # Import all ssl_utilties functions
 from sws.redirects import trace   # Import trace from redirect utilities
 from sws.dns_utilities import *   # Import all dns utilitites
 
-usage = """Super Web Scripts; A command line interface, and set of scripts for web tasks.
+usage = """Super Web Scripts; A command line interface, API, and set of scripts for web tasks
 
 Usage:
     sws [-h] [-v]
@@ -53,7 +53,6 @@ def main():
 
     if args["dns"]:
         dns_dict = get_dns_records(args['<domain>'], as_dict=True)
-
         print(dns_result_table(args['<domain>'], dns_dict))
 
     elif args["ssl"]:  # Begin parsing for ssl subcommand
