@@ -32,6 +32,14 @@ A module for dealing with getting domain information such as:
 ### dns_utilities
 A module for getting DNS configurations on a domain
 
+### downloads
+Module that provides a class for doing downloads that feature:
+
+- 4xx and 5xx error catching
+- Progress bars for downloads
+- Additional download metadata
+- Easy printable debugging
+
 ### redirects
 Provides a function for tracing redirects
 
@@ -47,6 +55,17 @@ Provides functionality for working with YouTube videos such as:
 
 - Downloading youtube videos
 - Pulling video metadata
+
+### framework
+A module to help extrapolate framework information of a url such as:
+
+- What is used to build it (i.e. Wordpress, squarespace etc.)
+- What version of a framework has been used to build it
+- Information about the proxying system used
+
+
+### Loadtest
+A module to help quickly setup loadtesting for an application/service
 
 Notes
 -----
