@@ -11,7 +11,7 @@ Examples
 ```
 from sws.downloads import Download
 
-d = Download("https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png") 
+d = Download('https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png') 
 d.download() # Downloads to ./sws-banner.png
 ``` 
 
@@ -20,7 +20,7 @@ d.download() # Downloads to ./sws-banner.png
 import os
 from sws.downloads import Download
 
-d = Download("https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png", download_path=os.path.join(os.getenv("USERPROFILE"),"Downloads"))
+d = Download('https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png', download_path=os.path.join(os.getenv('USERPROFILE'),'Downloads'))
 d.download() # Downloads to <downloads folder>/sws-banner.png
 ``` 
 
@@ -28,24 +28,26 @@ d.download() # Downloads to <downloads folder>/sws-banner.png
 ```
 from sws.downloads import Download
 
-d = Download("https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png" , filename="image.png") 
+d = Download('https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png' , filename='image.png') 
 d.download() # Downloads to ./image.png
 ``` 
 
 ### Using Debug printing
 ```
 from sws.downloads import Download
-d = Download("https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png")
+d = Download('https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png')
 print(d) '''Prints:
 Details for image.png
 size: 19kb
 downloaded: False
 url: https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png
-download path: C:\Users\Kieran\Desktop
+download path: C:\\Users\\Kieran\\Desktop
 '''
-print(repr(d)) # Prints: Download for https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png to download image.png to C:\Users\Kieran\Desktop and has not been downloaded yet
+
+print(repr(d)) # Prints: Download for https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png to download image.png to C:\\Users\\Kieran\\Desktop and has not been downloaded yet
 ```
 """
+
 import os                 # Used to validate paths
 import re                 # Used to parse for filename(s)
 import logging            # Used to log errors and debug info
@@ -86,7 +88,7 @@ class Download:
     ```
     from sws.downloads import Download
 
-    d = Download("https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png") 
+    d = Download('https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png') 
     d.download() # Downloads to ./sws-banner.png
     ``` 
 
@@ -95,7 +97,7 @@ class Download:
     import os
     from sws.downloads import Download
 
-    d = Download("https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png", download_path=os.path.join(os.getenv("USERPROFILE"),"Downloads"))
+    d = Download('https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png', download_path=os.path.join(os.getenv('USERPROFILE'),'Downloads'))
     d.download() # Downloads to <downloads folder>/sws-banner.png
     ``` 
 
@@ -103,22 +105,23 @@ class Download:
     ```
     from sws.downloads import Download
 
-    d = Download("https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png" , filename="image.png") 
+    d = Download('https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png' , filename='image.png') 
     d.download() # Downloads to ./image.png
     ``` 
 
     ### Using Debug printing
     ```
     from sws.downloads import Download
-    d = Download("https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png")
+    d = Download('https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png')
     print(d) '''Prints:
     Details for image.png
     size: 19kb
     downloaded: False
     url: https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png
-    download path: C:\Users\Kieran\Desktop
+    download path: C:\\Users\\Kieran\\Desktop
     '''
-    print(repr(d)) # Prints: Download for https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png to download image.png to C:\Users\Kieran\Desktop and has not been downloaded yet
+
+    print(repr(d)) # Prints: Download for https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png to download image.png to C:\\Users\\Kieran\\Desktop and has not been downloaded yet
     ```
     """    
     def __init__(self, url: str, download_path: Union[bool, str] = False, filename: Union[bool, str] = False):

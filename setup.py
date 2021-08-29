@@ -42,12 +42,13 @@ setuptools.setup(
             'console_scripts': ['sws = sws.cli:main']
         },
     install_requires=[
-    "requests",
-    "pytube3",
-    "docopt",
-    "pystall",
-    "python-whois-extended",
-    "dnspython",
+    "requests",                 # Used in various modules for http connections and header parsing
+    "pytube3",                  # Used for youtube downloading
+    "docopt",                   # Used for argument parsing in CLI
+    "pystall",                  # Used to install ad-hoc binaries
+    "python-whois-extended",    # Used to gather domain name info
+    "dnspython",                # Used to gather dns info
+    "locust",                   # Used to do loadtesting
     ],
     extras_require = {
         "dev" : ["nox",   # Used to run automated processes
