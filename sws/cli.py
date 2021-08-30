@@ -50,6 +50,7 @@ def main():
 
     if len(sys.argv) == 1:  # if no arguments are provided
         print(usage)
+        exit()
 
     if args["dns"]:
         dns_dict = get_dns_records(args['<domain>'], as_dict=True)
@@ -62,11 +63,13 @@ def main():
             pprint(get_ssl_cert(args['<hostname>']))
 
     elif args["redirects"]:  # Begin parsing for redirects subcommand
-        print(args["<ignored>"])
         if args["<ignored>"]:
             if args["<ignored>"].startswith("["):
                 args["<ignored>"] = list(args["<ignored>"])
-        trace(args["<url>"], args["<ignored>"], print_result=True)
+        try:
+            trace(args["<url>"], args["<ignored>"], print_result=True)
+        except ValueError as e:
+            print(e)
 
     elif args["youtube"]:
         download(args["<url>"], args["<path>"])

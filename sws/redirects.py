@@ -46,6 +46,11 @@ def trace(url: str, ignored_domains: Union[list, bool], print_result: bool = Tru
     -----
     url argument can include or not include a protocol
 
+    Raises
+    ------
+    ValueError:
+        If url cannot be connected to a ValueError will be raised
+
     Returns
     -------
     list[responses]:
@@ -81,6 +86,11 @@ def trace(url: str, ignored_domains: Union[list, bool], print_result: bool = Tru
     # Try going to the provided URL
     try:
         response = requests.get(url)
+
+    except requests.exceptions.ConnectionError:
+        if print_result:
+            print(f"Could not connect to {url}, please ensure there are no spelling mistakes")
+        raise ValueError(f"Could not connect to {url}, please ensure there are no spelling mistakes")
     except Exception as identifier:
         if print_result:
             print(f"Error while checking {url} \nError Code: {identifier}")

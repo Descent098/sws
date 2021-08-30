@@ -43,7 +43,7 @@ setuptools.setup(
         },
     install_requires=[
     "requests",                 # Used in various modules for http connections and header parsing
-    "pytube3",                  # Used for youtube downloading
+    "pytube",                  # Used for youtube downloading
     "docopt",                   # Used for argument parsing in CLI
     "pystall",                  # Used to install ad-hoc binaries
     "python-whois-extended",    # Used to gather domain name info
