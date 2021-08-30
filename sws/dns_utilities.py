@@ -96,6 +96,8 @@ def get_dns_records(domain:str, as_dict:bool=False) -> Union[List[str], Dict[str
     Notes
     -----
     - A list of supported record types can be found by importing `sws.dns.RECORD_TYPES` or `sws.dns.RECORD_TYPES_TUPLE` (a tuple not an enum so you can do index lookups)
+    - Records are returned asynchronously, this means the ordering can be off for records. For example if you have two NS records 
+    `ns1.example.com` and `ns2.example.com` they could be put into the returned dict/list in either order 
 
     Parameters
     ----------

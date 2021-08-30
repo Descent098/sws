@@ -3,6 +3,8 @@
 import pytest
 from sws.dns_utilities import *
 
+# NOTE: Due to the dynamic nature of domains I have chosen to test wih kieranwood.ca (my site) because I can be relatively sure it will be stable,
+# if this test file fails check the domain DNS is still valid
 
 def test_valid_domain_list():
     a = get_dns_records("kieranwood.ca")

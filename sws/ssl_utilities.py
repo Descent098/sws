@@ -85,6 +85,11 @@ def check_ssl_expiry(hostname: str) -> str:
     str:
         A the expiry of the domain name in MMM DD HH:MM:SS YYYY TZ format
 
+    Raises
+    ------
+    ValueError:
+        If hostname is not a valid domain
+
     Example
     -------
     Check when kieranwood.ca SSL cert expires
@@ -94,7 +99,10 @@ def check_ssl_expiry(hostname: str) -> str:
     print(check_ssl_expiry('kieranwood.ca')) # prints: 'Oct  9 12:00:00 2020 GMT'
     ```
     """
-    cert = get_ssl_cert(hostname)
+    try:
+        cert = get_ssl_cert(hostname)
+    except socket.gaierror:
+        raise ValueError(f"Unable to connect to {hostname}")
 
     expiry_date = cert["notAfter"]
 
@@ -108,6 +116,11 @@ def get_ssl_cert(hostname: str) -> dict:
     ---------
     hostname : str
         A string of a FQDN (root URL with no protocol) for example 'kieranwood.ca'
+
+    Raises
+    ------
+    ValueError:
+        If hostname is not a valid domain
 
     Returns
     -------
@@ -151,13 +164,15 @@ def get_ssl_cert(hostname: str) -> dict:
     """
     # Strip protocols from hostname if they exist
     if hostname.startswith("http://"):
-        hostname = hostname[7::]
+        hostname = hostname.replace("http://", "")
     elif hostname.startswith("https://"):
-        hostname = hostname[8::]
-
-    context_socket = _get_ssl_socket(hostname)
-    context_socket.connect((hostname, 443))  # Connects to the host over a socket
-    cert = context_socket.getpeercert()  # Dictionary containing all the certificate information
+        hostname = hostname.replace("https://", "")
+    try:
+        context_socket = _get_ssl_socket(hostname)
+        context_socket.connect((hostname, 443))  # Connects to the host over a socket
+        cert = context_socket.getpeercert()  # Dictionary containing all the certificate information
+    except socket.gaierror:
+        raise ValueError(f"Unable to connect to {hostname}")
 
     return cert
 
@@ -169,6 +184,11 @@ def get_ssl_issuer(hostname: str) -> Union[list, bool]:
     ----------
     hostname : str
         The hostname you want to get the issuer for
+
+    Raises
+    ------
+    ValueError:
+        If hostname is not a valid domain
 
     Returns
     -------
@@ -192,7 +212,15 @@ def get_ssl_issuer(hostname: str) -> Union[list, bool]:
     get_ssl_issuer("kieranwood.com") # Returns False
     ```
     """
-    cert = get_ssl_cert(hostname)
+    # Strip protocols from hostname if they exist
+    if hostname.startswith("http://"):
+        hostname = hostname.replace("http://", "")
+    elif hostname.startswith("https://"):
+        hostname = hostname.replace("https://", "")
+    try:
+        cert = get_ssl_cert(hostname)
+    except socket.gaierror:
+        raise ValueError(f"Unable to connect to {hostname}")
     if cert["issuer"]:
         issuer = [data[0] for data in cert["issuer"]]
         return issuer
@@ -208,6 +236,11 @@ def _get_ssl_socket(hostname: str) -> ssl.SSLSocket:
     hostname: (str)
         The hostname to instantiate a SSL socket context to
 
+    Raises
+    ------
+    ValueError:
+        If hostname is not a valid domain
+
     Returns
     -------
     SSLSocket:
@@ -221,6 +254,11 @@ def _get_ssl_socket(hostname: str) -> ssl.SSLSocket:
     context_socket.connect((hostname, 443)) # Connects to the host over a socket
     ```
     """
+    # Strip protocols from hostname if they exist
+    if hostname.startswith("http://"):
+        hostname = hostname.replace("http://", "")
+    elif hostname.startswith("https://"):
+        hostname = hostname.replace("https://", "")
     context = ssl.create_default_context()
     context_socket = context.wrap_socket(socket.socket(), server_hostname=hostname)
     return context_socket

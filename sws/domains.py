@@ -70,7 +70,14 @@ def get_domain_info(domain: str) -> dict:
     Notes
     -----
     - If whois is not installed, the package/executable will be installed
+    - Make sure to use the domain, and not just a url for example https://kieranwood.ca/hello is a url but kieranwood.ca is a domain
+    - In the case that a protocol (http:// or https://) is provided it will be stripped, be aware this can cause comparison issues to the 'name' parameter of the dictionary
     
+    Raises
+    ------
+    ValueError:
+        If provided domain is not a valid domain (i.e. Subdomain, or URL instead of domain)
+
     Examples
     --------
     Getting details about an unregistered domain
@@ -88,8 +95,28 @@ def get_domain_info(domain: str) -> dict:
     ```
     """
     _install_whois()  # Verify/install whois
-    domain = whois.query(domain)
-    if not domain:  # If the domain is not registered
+
+    # Validation
+
+    ## Strip protocols
+    if domain.startswith("http://"):
+        domain = domain.replace("http://", "")
+    if domain.startswith("https://"):
+        domain = domain.replace("https://", "")
+
+    ## Raise error if subdomain
+    if len(domain.split(".")) > 2: # If domain is subdomain
+        raise ValueError(f"Provided domain {domain} is likely a subdomain")
+    
+    ## Raise Error if invalid TLD
+    try:
+        domain_details = whois.query(domain)
+    except Exception as e:
+        if "Unknown TLD:" in str(e):
+            raise ValueError(f"Domain {domain} is not a valid domain")
+
+    # Parse response
+    if not domain_details:  # If the domain is not registered
         return {'creation_date': False,
                 'expiration_date': False,
                 'last_updated': False,
@@ -97,8 +124,18 @@ def get_domain_info(domain: str) -> dict:
                 'name_servers': False,
                 'registrant_cc': False,
                 'registrar': False}
+
+    elif domain_details is None:  # If the domain is not registered and query completely failed
+        return {'creation_date': False,
+                'expiration_date': False,
+                'last_updated': False,
+                'name': domain,
+                'name_servers': False,
+                'registrant_cc': False,
+                'registrar': False}
+
     else:  # If there was domain info
-        return vars(domain)
+        return vars(domain_details)
 
 
 def domain_availability(domain_query: dict) -> tuple:

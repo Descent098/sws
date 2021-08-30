@@ -8,6 +8,9 @@ from sws.downloads import Download
 import pytest
 
 
+# NOTE: Due to the dynamic nature of downloads I have chosen to test wih the github source code because I can be relatively sure it will be stable,
+# if this test file fails check the repo is still valid
+
 def test_valid_url():
     test_download = Download("https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png", ".")
     

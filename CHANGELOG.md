@@ -6,13 +6,11 @@ Focus for this release was to revamp the package and add a ton of functionality.
 
 Features:
 
-- Moved ```trace``` command code to ```trace``` module and simplified tracing code
+- Simplified and streamlined `redirect.trace()`
 - Added Bash autocomplete for ease of use on *nix systems
 - Added ```domains``` module and command
 - Added ```dns``` module and command
 - Added ```downloads`` module to make handling downlaods simpler
-- Added ```loadtest``` module and command
-- Added ```framework``` module and command
 - Added `__main__.py` file for direct cli invocation (`python -m sws`)
 
 Documentation Improvements:
