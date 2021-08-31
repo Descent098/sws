@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>sws.domains API documentation</title>
+<meta name="description" content="A module for dealing with getting domain information such as: …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>sws.domains</code></h1>
+</header>
+<section id="section-intro">
+<p>A module for dealing with getting domain information such as:</p>
+<ul>
+<li>If a domain is available</li>
+<li>Who a domain is registered with</li>
+<li>Other domain details such as, creation_date, name_servers etc.</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>If whois is not installed, the package/executable will be installed</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<h3 id="getting-details-about-an-available-domain">Getting details about an available domain</h3>
+<pre><code>from sws.domains import get_domain_info, domain_availability
+
+domain_details = get_domain_info('kieranwood.com')
+domain_availability(domain_details) # ('Domain available', True)
+</code></pre>
+<h3 id="getting-details-of-an-unavailable-domain">Getting details of an unavailable domain</h3>
+<pre><code>from sws.domains import get_domain_info, domain_availability
+
+domain_details = get_domain_info('kieranwood.ca')
+domain_availability(domain_details) # ('Domain unavailable until 6/November/2020', False)
+</code></pre>
+<h3 id="getting-details-about-an-unregistered-domain">Getting details about an unregistered domain</h3>
+<pre><code>from sws.domains import get_domain_info
+
+print(get_domain_info('kieranwood.com')) # {'creation_date': False, 'expiration_date': False, 'last_updated': False, 'name': domain, 'name_servers': False, 'registrant_cc': False, 'registrar': False}
+</code></pre>
+<h3 id="getting-details-of-a-registered-domain">Getting details of a registered domain</h3>
+<pre><code>from sws.domains import get_domain_info
+
+print(get_domain_info('kieranwood.ca')) # {'creation_date': datetime.datetime(2018, 11, 6, 5, 9, 47), 'expiration_date': datetime.datetime(2020, 11, 6, 5, 9, 47), 'last_updated': datetime.datetime(2020, 1, 8, 8, 9, 44), 'name': 'kieranwood.ca', 'name_servers': {'kevin.ns.cloudflare.com', 'sharon.ns.cloudflare.com'}, 'registrant_cc': 'redacted for privacy', 'registrar': 'Go Daddy Domains Canada, Inc'}
+</code></pre>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;A module for dealing with getting domain information such as:
+
+- If a domain is available
+- Who a domain is registered with
+- Other domain details such as, creation_date, name_servers etc.
+
+Notes
+-----
+- If whois is not installed, the package/executable will be installed
+
+Examples
+--------
+### Getting details about an available domain
+```
+from sws.domains import get_domain_info, domain_availability
+
+domain_details = get_domain_info(&#39;kieranwood.com&#39;)
+domain_availability(domain_details) # (&#39;Domain available&#39;, True)
+```
+
+### Getting details of an unavailable domain
+```
+from sws.domains import get_domain_info, domain_availability
+
+domain_details = get_domain_info(&#39;kieranwood.ca&#39;)
+domain_availability(domain_details) # (&#39;Domain unavailable until 6/November/2020&#39;, False)
+```
+
+### Getting details about an unregistered domain
+```
+from sws.domains import get_domain_info
+
+print(get_domain_info(&#39;kieranwood.com&#39;)) # {&#39;creation_date&#39;: False, &#39;expiration_date&#39;: False, &#39;last_updated&#39;: False, &#39;name&#39;: domain, &#39;name_servers&#39;: False, &#39;registrant_cc&#39;: False, &#39;registrar&#39;: False}
+```
+
+### Getting details of a registered domain
+```
+from sws.domains import get_domain_info
+
+print(get_domain_info(&#39;kieranwood.ca&#39;)) # {&#39;creation_date&#39;: datetime.datetime(2018, 11, 6, 5, 9, 47), &#39;expiration_date&#39;: datetime.datetime(2020, 11, 6, 5, 9, 47), &#39;last_updated&#39;: datetime.datetime(2020, 1, 8, 8, 9, 44), &#39;name&#39;: &#39;kieranwood.ca&#39;, &#39;name_servers&#39;: {&#39;kevin.ns.cloudflare.com&#39;, &#39;sharon.ns.cloudflare.com&#39;}, &#39;registrant_cc&#39;: &#39;redacted for privacy&#39;, &#39;registrar&#39;: &#39;Go Daddy Domains Canada, Inc&#39;}
+```
+&#34;&#34;&#34;
+
+# Standard Library Dependencies
+import os                        # Used for path manipulation
+import sys                       # Used to exit safely during errors
+import logging                   # Used for logging in debugging etc.
+import subprocess                # Used to execute existing binaries
+from shutil import move          # Used to move folders within the os
+from datetime import datetime    # Used for interpreting dates and times
+from calendar import month_name  # Used to convert integer month representations to string representations
+
+# Third Party Dependencies
+import whois  # Used to pull domain information
+from pystall.core import build, ZIPResource, _add_to_path, APTResource  # Used to install whois binary
+
+
+def get_domain_info(domain: str) -&gt; dict:
+    &#34;&#34;&#34;Returns a dictionary of all domain information
+
+    Parameters
+    ----------
+    domain : str
+        The domain you want the details for
+
+    Returns
+    -------
+    dict
+        A dictionary of a whois.Domain query
+
+    Notes
+    -----
+    - If whois is not installed, the package/executable will be installed
+    - Make sure to use the domain, and not just a url for example https://kieranwood.ca/hello is a url but kieranwood.ca is a domain
+    - In the case that a protocol (http:// or https://) is provided it will be stripped, be aware this can cause comparison issues to the &#39;name&#39; parameter of the dictionary
+    
+    Raises
+    ------
+    ValueError:
+        If provided domain is not a valid domain (i.e. Subdomain, or URL instead of domain)
+
+    Examples
+    --------
+    Getting details about an unregistered domain
+    ```
+    from sws.domains import get_domain_info
+
+    print(get_domain_info(&#39;kieranwood.com&#39;)) # {&#39;creation_date&#39;: False, &#39;expiration_date&#39;: False, &#39;last_updated&#39;: False, &#39;name&#39;: domain, &#39;name_servers&#39;: False, &#39;registrant_cc&#39;: False, &#39;registrar&#39;: False}
+    ```
+
+    Getting details of a registered domain
+    ```
+    from sws.domains import get_domain_info
+
+    print(get_domain_info(&#39;kieranwood.ca&#39;)) # {&#39;creation_date&#39;: datetime.datetime(2018, 11, 6, 5, 9, 47), &#39;expiration_date&#39;: datetime.datetime(2020, 11, 6, 5, 9, 47), &#39;last_updated&#39;: datetime.datetime(2020, 1, 8, 8, 9, 44), &#39;name&#39;: &#39;kieranwood.ca&#39;, &#39;name_servers&#39;: {&#39;kevin.ns.cloudflare.com&#39;, &#39;sharon.ns.cloudflare.com&#39;}, &#39;registrant_cc&#39;: &#39;redacted for privacy&#39;, &#39;registrar&#39;: &#39;Go Daddy Domains Canada, Inc&#39;}
+    ```
+    &#34;&#34;&#34;
+    logging.info(f&#34;Entering get_domain_info(domain={domain})&#34;)
+    _install_whois()  # Verify/install whois
+
+    # Validation
+
+    ## Strip protocols
+    if domain.startswith(&#34;https://&#34;):
+        logging.info(f&#34;Stripping https:// protocol from {domain}&#34;)
+        domain = domain.replace(&#34;https://&#34;, &#34;&#34;)
+    elif domain.startswith(&#34;http://&#34;):
+        logging.info(f&#34;Stripping http:// protocol from {domain}&#34;)
+        domain = domain.replace(&#34;http://&#34;, &#34;&#34;)
+
+    ## Raise error if subdomain
+    logging.info(f&#34;Confirming domain {domain} is not a subdomain&#34;)
+    if len(domain.split(&#34;.&#34;)) &gt; 2: # If domain is subdomain
+        raise ValueError(f&#34;Provided domain {domain} is likely a subdomain&#34;)
+    
+    ## Raise Error if invalid TLD
+    try:
+        logging.info(f&#34;Querying {domain} with whois&#34;)
+        domain_details = whois.query(domain)
+    except Exception as e:
+        if &#34;Unknown TLD:&#34; in str(e):
+            raise ValueError(f&#34;Domain {domain} is not a valid domain&#34;)
+
+    # ## TODO: When new version of python-whois-extended releases uncomment below code
+    # try:
+        
+    #     if os.name == &#34;nt&#34; and os.path.exists(os.path.realpath(f&#34;{os.getenv(&#39;USERPROFILE&#39;)}\\..\\..\\whois&#34;)):
+    #         INSTALL_FOLDER = os.path.realpath(f&#34;{os.getenv(&#39;USERPROFILE&#39;)}\\..\\..\\whois\\whois.exe&#34;)
+    #         domain_details = whois.query(domain, executable=INSTALL_FOLDER)
+    #     else:
+    #         domain_details = whois.query(domain)
+    # except Exception as e:
+    #     if &#34;Unknown TLD:&#34; in str(e):
+    #         raise ValueError(f&#34;Domain {domain} is not a valid domain&#34;)
+    #     else:
+    #         raise e
+
+    # Parse response
+    if not domain_details:  # If the domain is not registered
+        logging.info(f&#34;&#34;&#34;Exiting get_domain_info() and returning {{&#39;creation_date&#39;: False,
+                &#39;expiration_date&#39;: False,
+                &#39;last_updated&#39;: False,
+                &#39;name&#39;: {domain},
+                &#39;name_servers&#39;: False,
+                &#39;registrant_cc&#39;: False,
+                &#39;registrar&#39;: False}}&#34;&#34;&#34;)
+        return {&#39;creation_date&#39;: False,
+                &#39;expiration_date&#39;: False,
+                &#39;last_updated&#39;: False,
+                &#39;name&#39;: domain,
+                &#39;name_servers&#39;: False,
+                &#39;registrant_cc&#39;: False,
+                &#39;registrar&#39;: False}
+
+    elif domain_details is None:  # If the domain is not registered and query completely failed
+        logging.info(f&#34;&#34;&#34;Exiting get_domain_info() and returning {{&#39;creation_date&#39;: False,
+                &#39;expiration_date&#39;: False,
+                &#39;last_updated&#39;: False,
+                &#39;name&#39;: {domain},
+                &#39;name_servers&#39;: False,
+                &#39;registrant_cc&#39;: False,
+                &#39;registrar&#39;: False}}&#34;&#34;&#34;)
+        return {&#39;creation_date&#39;: False,
+                &#39;expiration_date&#39;: False,
+                &#39;last_updated&#39;: False,
+                &#39;name&#39;: domain,
+                &#39;name_servers&#39;: False,
+                &#39;registrant_cc&#39;: False,
+                &#39;registrar&#39;: False}
+
+    else:  # If there was domain info
+        logging.info(f&#34;Exiting get_domain_info() and returning {vars(domain_details)}&#34;)
+        return vars(domain_details)
+
+
+def domain_availability(domain_query: dict) -&gt; tuple:
+    &#34;&#34;&#34;Checks the availability of a domain
+
+    Parameters
+    ----------
+    domain_query : dict
+        The dictionary representation of a whois.Domain object
+
+    Returns
+    -------
+    tuple[str, bool]
+        Returns a tuple with a printable string about availability, 
+        and a bool that&#39;s True if it&#39;s available and False if not
+
+    Examples
+    --------
+    Getting details about an available domain
+    ```
+    from sws.domains import get_domain_info, domain_availability
+
+    domain_details = get_domain_info(&#39;kieranwood.com&#39;)
+    domain_availability(domain_details) # (&#39;Domain available&#39;, True)
+    ```
+
+    Getting details of an unavailable domain
+    ```
+    from sws.domains import get_domain_info, domain_availability
+
+    domain_details = get_domain_info(&#39;kieranwood.ca&#39;)
+    domain_availability(domain_details) # (&#39;Domain unavailable until 6/November/2020&#39;, False)
+    ```
+    &#34;&#34;&#34;
+    logging.info(f&#34;Entering get_domain_info(domain_query={domain_query})&#34;)
+    if not domain_query[&#34;expiration_date&#34;] or domain_query[&#34;expiration_date&#34;] &lt; datetime.today():
+        logging.info(&#34;Domain available, returning (&#39;Domain available&#39;, True)&#34;)
+        return &#34;Domain available&#34;, True
+    else:
+        logging.info(f&#34;Domain unavailable, returning (&#39;Domain {domain_query[&#39;name&#39;]} unavailable until {domain_query[&#39;expiration_date&#39;].day}/{month_name[domain_query[&#39;expiration_date&#39;].month]}/{domain_query[&#39;expiration_date&#39;].year}&#39;, False)&#34;)
+        return f&#34;Domain {domain_query[&#39;name&#39;]} unavailable until {domain_query[&#39;expiration_date&#39;].day}/{month_name[domain_query[&#39;expiration_date&#39;].month]}/{domain_query[&#39;expiration_date&#39;].year}&#34;, False
+
+
+def _install_whois():
+    &#34;&#34;&#34;Used to install whois binary if it isn&#39;t available&#34;&#34;&#34;
+    logging.info(&#34;Entering _install_whois()&#34;)
+    # Setting up default downloads folder based on OS
+    if os.name == &#34;nt&#34;:
+        DOWNLOAD_FOLDER = f&#34;{os.getenv(&#39;USERPROFILE&#39;)}\\Downloads&#34;
+        INSTALL_FOLDER = os.path.realpath(f&#34;{os.getenv(&#39;USERPROFILE&#39;)}\\..\\..\\whois&#34;)
+    else:  # PORT: For *Nix systems
+        DOWNLOAD_FOLDER = f&#34;{os.getenv(&#39;HOME&#39;)}/Downloads&#34;
+        INSTALL_FOLDER = f&#34;{os.getenv(&#39;HOME&#39;)}/whois&#34;
+    if not os.path.exists(INSTALL_FOLDER):
+        try:
+            subprocess.Popen(&#34;whois&#34;)  # Check if binary is installed
+        except FileNotFoundError:
+            if os.name == &#34;nt&#34;:  # Install windows version of whois
+                logging.info(f&#34;System is windows manually installing: DOWNLOAD_FOLDER = {DOWNLOAD_FOLDER}, INSTALL_FOLDER = {INSTALL_FOLDER}&#34;)
+                logging.info(f&#34;Downloading whois from https://download.sysinternals.com/files/WhoIs.zip and installing to {INSTALL_FOLDER}&#34;)
+                build(ZIPResource(&#34;whois&#34;, &#34;https://download.sysinternals.com/files/WhoIs.zip&#34;, overwrite_agreement=True))
+                move(f&#34;{DOWNLOAD_FOLDER}{os.sep}whois&#34;, INSTALL_FOLDER)
+                logging.warning(&#34;Beginning adding whois to path variable&#34;)
+                _add_to_path(INSTALL_FOLDER) # TODO: When new version of python-whois-extended releases remove this call
+                print(&#34;Whois has been installed, restart script&#34;) # TODO: When new version of python-whois-extended releases remove this call
+                sys.exit()
+            else:  # Linux Installation
+                logging.info(f&#34;System is nix, installing with APT: DOWNLOAD_FOLDER = {DOWNLOAD_FOLDER}, INSTALL_FOLDER = {INSTALL_FOLDER}&#34;)
+                build(APTResource(&#34;whois&#34;, &#34;whois&#34;, overwrite_agreement=True))</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="sws.domains.domain_availability"><code class="name flex">
+<span>def <span class="ident">domain_availability</span></span>(<span>domain_query: dict) ‑> tuple</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks the availability of a domain</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>domain_query</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The dictionary representation of a whois.Domain object</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple[str, bool]</code></dt>
+<dd>Returns a tuple with a printable string about availability,
+and a bool that's True if it's available and False if not</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<p>Getting details about an available domain</p>
+<pre><code>from sws.domains import get_domain_info, domain_availability
+
+domain_details = get_domain_info('kieranwood.com')
+domain_availability(domain_details) # ('Domain available', True)
+</code></pre>
+<p>Getting details of an unavailable domain</p>
+<pre><code>from sws.domains import get_domain_info, domain_availability
+
+domain_details = get_domain_info('kieranwood.ca')
+domain_availability(domain_details) # ('Domain unavailable until 6/November/2020', False)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def domain_availability(domain_query: dict) -&gt; tuple:
+    &#34;&#34;&#34;Checks the availability of a domain
+
+    Parameters
+    ----------
+    domain_query : dict
+        The dictionary representation of a whois.Domain object
+
+    Returns
+    -------
+    tuple[str, bool]
+        Returns a tuple with a printable string about availability, 
+        and a bool that&#39;s True if it&#39;s available and False if not
+
+    Examples
+    --------
+    Getting details about an available domain
+    ```
+    from sws.domains import get_domain_info, domain_availability
+
+    domain_details = get_domain_info(&#39;kieranwood.com&#39;)
+    domain_availability(domain_details) # (&#39;Domain available&#39;, True)
+    ```
+
+    Getting details of an unavailable domain
+    ```
+    from sws.domains import get_domain_info, domain_availability
+
+    domain_details = get_domain_info(&#39;kieranwood.ca&#39;)
+    domain_availability(domain_details) # (&#39;Domain unavailable until 6/November/2020&#39;, False)
+    ```
+    &#34;&#34;&#34;
+    logging.info(f&#34;Entering get_domain_info(domain_query={domain_query})&#34;)
+    if not domain_query[&#34;expiration_date&#34;] or domain_query[&#34;expiration_date&#34;] &lt; datetime.today():
+        logging.info(&#34;Domain available, returning (&#39;Domain available&#39;, True)&#34;)
+        return &#34;Domain available&#34;, True
+    else:
+        logging.info(f&#34;Domain unavailable, returning (&#39;Domain {domain_query[&#39;name&#39;]} unavailable until {domain_query[&#39;expiration_date&#39;].day}/{month_name[domain_query[&#39;expiration_date&#39;].month]}/{domain_query[&#39;expiration_date&#39;].year}&#39;, False)&#34;)
+        return f&#34;Domain {domain_query[&#39;name&#39;]} unavailable until {domain_query[&#39;expiration_date&#39;].day}/{month_name[domain_query[&#39;expiration_date&#39;].month]}/{domain_query[&#39;expiration_date&#39;].year}&#34;, False</code></pre>
+</details>
+</dd>
+<dt id="sws.domains.get_domain_info"><code class="name flex">
+<span>def <span class="ident">get_domain_info</span></span>(<span>domain: str) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a dictionary of all domain information</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>domain</code></strong> :&ensp;<code>str</code></dt>
+<dd>The domain you want the details for</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>A dictionary of a whois.Domain query</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>If whois is not installed, the package/executable will be installed</li>
+<li>Make sure to use the domain, and not just a url for example <a href="https://kieranwood.ca/hello">https://kieranwood.ca/hello</a> is a url but kieranwood.ca is a domain</li>
+<li>In the case that a protocol (http:// or https://) is provided it will be stripped, be aware this can cause comparison issues to the 'name' parameter of the dictionary</li>
+</ul>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>If provided domain is not a valid domain (i.e. Subdomain, or URL instead of domain)</p>
+<h2 id="examples">Examples</h2>
+<p>Getting details about an unregistered domain</p>
+<pre><code>from sws.domains import get_domain_info
+
+print(get_domain_info('kieranwood.com')) # {'creation_date': False, 'expiration_date': False, 'last_updated': False, 'name': domain, 'name_servers': False, 'registrant_cc': False, 'registrar': False}
+</code></pre>
+<p>Getting details of a registered domain</p>
+<pre><code>from sws.domains import get_domain_info
+
+print(get_domain_info('kieranwood.ca')) # {'creation_date': datetime.datetime(2018, 11, 6, 5, 9, 47), 'expiration_date': datetime.datetime(2020, 11, 6, 5, 9, 47), 'last_updated': datetime.datetime(2020, 1, 8, 8, 9, 44), 'name': 'kieranwood.ca', 'name_servers': {'kevin.ns.cloudflare.com', 'sharon.ns.cloudflare.com'}, 'registrant_cc': 'redacted for privacy', 'registrar': 'Go Daddy Domains Canada, Inc'}
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_domain_info(domain: str) -&gt; dict:
+    &#34;&#34;&#34;Returns a dictionary of all domain information
+
+    Parameters
+    ----------
+    domain : str
+        The domain you want the details for
+
+    Returns
+    -------
+    dict
+        A dictionary of a whois.Domain query
+
+    Notes
+    -----
+    - If whois is not installed, the package/executable will be installed
+    - Make sure to use the domain, and not just a url for example https://kieranwood.ca/hello is a url but kieranwood.ca is a domain
+    - In the case that a protocol (http:// or https://) is provided it will be stripped, be aware this can cause comparison issues to the &#39;name&#39; parameter of the dictionary
+    
+    Raises
+    ------
+    ValueError:
+        If provided domain is not a valid domain (i.e. Subdomain, or URL instead of domain)
+
+    Examples
+    --------
+    Getting details about an unregistered domain
+    ```
+    from sws.domains import get_domain_info
+
+    print(get_domain_info(&#39;kieranwood.com&#39;)) # {&#39;creation_date&#39;: False, &#39;expiration_date&#39;: False, &#39;last_updated&#39;: False, &#39;name&#39;: domain, &#39;name_servers&#39;: False, &#39;registrant_cc&#39;: False, &#39;registrar&#39;: False}
+    ```
+
+    Getting details of a registered domain
+    ```
+    from sws.domains import get_domain_info
+
+    print(get_domain_info(&#39;kieranwood.ca&#39;)) # {&#39;creation_date&#39;: datetime.datetime(2018, 11, 6, 5, 9, 47), &#39;expiration_date&#39;: datetime.datetime(2020, 11, 6, 5, 9, 47), &#39;last_updated&#39;: datetime.datetime(2020, 1, 8, 8, 9, 44), &#39;name&#39;: &#39;kieranwood.ca&#39;, &#39;name_servers&#39;: {&#39;kevin.ns.cloudflare.com&#39;, &#39;sharon.ns.cloudflare.com&#39;}, &#39;registrant_cc&#39;: &#39;redacted for privacy&#39;, &#39;registrar&#39;: &#39;Go Daddy Domains Canada, Inc&#39;}
+    ```
+    &#34;&#34;&#34;
+    logging.info(f&#34;Entering get_domain_info(domain={domain})&#34;)
+    _install_whois()  # Verify/install whois
+
+    # Validation
+
+    ## Strip protocols
+    if domain.startswith(&#34;https://&#34;):
+        logging.info(f&#34;Stripping https:// protocol from {domain}&#34;)
+        domain = domain.replace(&#34;https://&#34;, &#34;&#34;)
+    elif domain.startswith(&#34;http://&#34;):
+        logging.info(f&#34;Stripping http:// protocol from {domain}&#34;)
+        domain = domain.replace(&#34;http://&#34;, &#34;&#34;)
+
+    ## Raise error if subdomain
+    logging.info(f&#34;Confirming domain {domain} is not a subdomain&#34;)
+    if len(domain.split(&#34;.&#34;)) &gt; 2: # If domain is subdomain
+        raise ValueError(f&#34;Provided domain {domain} is likely a subdomain&#34;)
+    
+    ## Raise Error if invalid TLD
+    try:
+        logging.info(f&#34;Querying {domain} with whois&#34;)
+        domain_details = whois.query(domain)
+    except Exception as e:
+        if &#34;Unknown TLD:&#34; in str(e):
+            raise ValueError(f&#34;Domain {domain} is not a valid domain&#34;)
+
+    # ## TODO: When new version of python-whois-extended releases uncomment below code
+    # try:
+        
+    #     if os.name == &#34;nt&#34; and os.path.exists(os.path.realpath(f&#34;{os.getenv(&#39;USERPROFILE&#39;)}\\..\\..\\whois&#34;)):
+    #         INSTALL_FOLDER = os.path.realpath(f&#34;{os.getenv(&#39;USERPROFILE&#39;)}\\..\\..\\whois\\whois.exe&#34;)
+    #         domain_details = whois.query(domain, executable=INSTALL_FOLDER)
+    #     else:
+    #         domain_details = whois.query(domain)
+    # except Exception as e:
+    #     if &#34;Unknown TLD:&#34; in str(e):
+    #         raise ValueError(f&#34;Domain {domain} is not a valid domain&#34;)
+    #     else:
+    #         raise e
+
+    # Parse response
+    if not domain_details:  # If the domain is not registered
+        logging.info(f&#34;&#34;&#34;Exiting get_domain_info() and returning {{&#39;creation_date&#39;: False,
+                &#39;expiration_date&#39;: False,
+                &#39;last_updated&#39;: False,
+                &#39;name&#39;: {domain},
+                &#39;name_servers&#39;: False,
+                &#39;registrant_cc&#39;: False,
+                &#39;registrar&#39;: False}}&#34;&#34;&#34;)
+        return {&#39;creation_date&#39;: False,
+                &#39;expiration_date&#39;: False,
+                &#39;last_updated&#39;: False,
+                &#39;name&#39;: domain,
+                &#39;name_servers&#39;: False,
+                &#39;registrant_cc&#39;: False,
+                &#39;registrar&#39;: False}
+
+    elif domain_details is None:  # If the domain is not registered and query completely failed
+        logging.info(f&#34;&#34;&#34;Exiting get_domain_info() and returning {{&#39;creation_date&#39;: False,
+                &#39;expiration_date&#39;: False,
+                &#39;last_updated&#39;: False,
+                &#39;name&#39;: {domain},
+                &#39;name_servers&#39;: False,
+                &#39;registrant_cc&#39;: False,
+                &#39;registrar&#39;: False}}&#34;&#34;&#34;)
+        return {&#39;creation_date&#39;: False,
+                &#39;expiration_date&#39;: False,
+                &#39;last_updated&#39;: False,
+                &#39;name&#39;: domain,
+                &#39;name_servers&#39;: False,
+                &#39;registrant_cc&#39;: False,
+                &#39;registrar&#39;: False}
+
+    else:  # If there was domain info
+        logging.info(f&#34;Exiting get_domain_info() and returning {vars(domain_details)}&#34;)
+        return vars(domain_details)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul>
+<li><a href="#notes">Notes</a></li>
+<li><a href="#examples">Examples</a><ul>
+<li><a href="#getting-details-about-an-available-domain">Getting details about an available domain</a></li>
+<li><a href="#getting-details-of-an-unavailable-domain">Getting details of an unavailable domain</a></li>
+<li><a href="#getting-details-about-an-unregistered-domain">Getting details about an unregistered domain</a></li>
+<li><a href="#getting-details-of-a-registered-domain">Getting details of a registered domain</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="sws" href="index.html">sws</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="sws.domains.domain_availability" href="#sws.domains.domain_availability">domain_availability</a></code></li>
+<li><code><a title="sws.domains.get_domain_info" href="#sws.domains.get_domain_info">get_domain_info</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

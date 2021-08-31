@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>sws.dns_utilities API documentation</title>
+<meta name="description" content="A module for getting DNS configurations on a domain …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>sws.dns_utilities</code></h1>
+</header>
+<section id="section-intro">
+<p>A module for getting DNS configurations on a domain</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>If http or https is passed to any function it will be stripped</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<h3 id="printing-the-values-of-kieranwoodca-when-as_dict-is-true">Printing the values of 'kieranwood.ca' when as_dict is True</h3>
+<pre><code>from sws.dns_utilities import get_dns_records
+
+print(get_dns_records(&quot;kieranwood.ca&quot;, as_dict=True)) # {'A': ['104.21.47.45', '172.67.144.116'], 'SOA': 'kevin.ns.cloudflare.com. dns.cloudflare.com. 2036568886 10000 2400 604800 3600'}
+</code></pre>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;A module for getting DNS configurations on a domain
+
+Notes
+-----
+- If http or https is passed to any function it will be stripped
+
+Examples
+--------
+### Printing the values of &#39;kieranwood.ca&#39; when as_dict is True
+```
+from sws.dns_utilities import get_dns_records
+
+print(get_dns_records(&#34;kieranwood.ca&#34;, as_dict=True)) # {&#39;A&#39;: [&#39;104.21.47.45&#39;, &#39;172.67.144.116&#39;], &#39;SOA&#39;: &#39;kevin.ns.cloudflare.com. dns.cloudflare.com. 2036568886 10000 2400 604800 3600&#39;}
+```
+&#34;&#34;&#34;
+# Standard Library Dependencies
+import logging                              # Used for logging
+from math import floor, ceil                # Used to normalize padding
+from typing import Dict, List, Tuple, Union # Used to provide useful typehints in functions
+
+# Third Party Library Dependencies
+import dns.resolver     # Used to get domain information
+import dns.rdatatype    # Used to determine record types
+
+# Includes deprecated record types (more canonical)
+RECORD_TYPES = dns.rdatatype.RdataType
+
+# More human-readable and workable list that axes unused record types taken from https://en.wikipedia.org/wiki/List_of_DNS_record_types
+RECORD_TYPES_TUPLE:Tuple[str] = ( 
+    # Alias/resource records
+    &#39;A&#39;,
+    &#39;AAAA&#39;,
+    &#39;CNAME&#39;,
+    &#39;DNAME&#39;,
+    &#39;URI&#39;,
+    &#39;PTR&#39;,
+    &#39;LOC&#39;,
+    &#39;GPOS&#39;,
+
+    # Nameservers/Name registrar config
+    &#39;NS&#39;,
+    &#39;SOA&#39;,
+    &#39;CSYNC&#39;,
+    &#39;NSEC&#39;,
+    &#39;NSEC3&#39;,
+    &#39;NSEC3PARAM&#39;,
+    &#39;CAA&#39;,
+    &#39;RP&#39;,
+    &#39;DHCID&#39;,
+
+    # Mailservers/Communications
+    &#39;MX&#39;,
+    &#39;SPF&#39;,
+    &#39;SRV&#39;,
+    &#39;MD&#39;,  # Technically obsoleted by RFC 973
+    &#39;MF&#39;,  # Technically obsoleted by RFC 973
+
+    #Mailing lists (mostly obsolete at this point but unfortunately not dead)
+    &#39;MB&#39;,
+    &#39;MG&#39;,
+    &#39;MR&#39;,
+    &#39;MAILA&#39;,
+    &#39;MAILB&#39;,
+    &#39;MINFO&#39;,
+
+    # Cert info/configuration/misc
+    &#39;TXT&#39;,
+    &#39;CERT&#39;,
+    &#39;DNSKEY&#39;,
+    &#39;KEY&#39;,      # Somewhat obsoleted by RFC 3445
+    &#39;CDNSKEY&#39;,
+    &#39;HINFO&#39;,    # Unobsoleted by RFC 8482
+    &#39;AFSDB&#39;,
+    &#39;NAPTR&#39;,
+    &#39;KX&#39;,
+    &#39;OPT&#39;,
+    &#39;DS&#39;,
+    &#39;SSHFP&#39;,
+    &#39;IPSECKEY&#39;,
+    &#39;RRSIG&#39;,
+    &#39;TLSA&#39;,
+    &#39;HIP&#39;,
+    &#39;CDS&#39;,
+    &#39;EUI48&#39;,
+    &#39;EUI64&#39;,
+    &#39;TKEY&#39;,
+    &#39;TSIG&#39;,
+    &#39;IXFR&#39;,
+    &#39;AXFR&#39;,
+    &#39;TA&#39;,
+    &#39;DLV&#39;,
+)
+
+
+def get_dns_records(domain:str, as_dict:bool=False) -&gt; Union[List[str], Dict[str, Union[str, List[str]]]]:
+    &#34;&#34;&#34;Takes in a domain and returns either a list or dictionary of the records of the domain
+
+    Notes
+    -----
+    - A list of supported record types can be found by importing `sws.dns.RECORD_TYPES` or `sws.dns.RECORD_TYPES_TUPLE` (a tuple not an enum so you can do index lookups)
+    - Records are returned asynchronously, this means the ordering can be off for records. For example if you have two NS records 
+    `ns1.example.com` and `ns2.example.com` they could be put into the returned dict/list in either order 
+
+    Parameters
+    ----------
+    domain : str
+        [description]
+
+    as_dict : bool, optional
+        Whether to return a list of strings (False) or dictionary (True), by default False
+
+    Returns
+    -------
+    Union[List[str], Dict[str, str]]
+        If as_dict is False will return a list of printable strings (i.e. [&#39;A: 127.0.0.1&#39;]), \n
+        if as_dict is True will return a dict with record:str-&gt;record_data:str mapping (i.e. {&#39;A&#39;:&#39;127.0.0.1&#39;})
+
+    Raises
+    ------
+    ValueError
+        If the domain has no valid records
+
+    Examples
+    --------
+    ### Printing the values of &#39;kieranwood.ca&#39;
+    ```
+    from sws.dns import get_dns_records
+
+    print(get_dns_records(&#34;kieranwood.ca&#34;)) # [&#39;A: 127.0.0.1&#39;, &#39;A: 106.23.49.45&#39;, &#39;NS: kevin.ns.cloudflare.com.&#39;]
+    ```
+
+    ### Printing the values of &#39;kieranwood.ca&#39; when as_dict is True
+    ```
+    from sws.dns_utilities import get_dns_records
+
+    print(get_dns_records(&#34;kieranwood.ca&#34;, as_dict=True)) # {&#39;A&#39;: [&#39;104.21.47.45&#39;, &#39;172.67.144.116&#39;], &#39;SOA&#39;: &#39;kevin.ns.cloudflare.com. dns.cloudflare.com. 2036568886 10000 2400 604800 3600&#39;}
+    ```
+    &#34;&#34;&#34;
+    logging.info(f&#34;Entering get_dns_records(domain={domain}, as_dict={as_dict}) &#34;)
+
+    if domain.startswith(&#34;https://&#34;):
+        logging.info(f&#34;Stripping https:// protocol from {domain}&#34;)
+        domain = domain.replace(&#34;https://&#34;, &#34;&#34;)
+    elif domain.startswith(&#34;http://&#34;):
+        logging.info(f&#34;Stripping http:// protocol from {domain}&#34;)
+        domain = domain.replace(&#34;http://&#34;, &#34;&#34;)
+
+    if as_dict:
+        logging.debug(&#34;Beginning itteration of record types, and setting up result dictionary&#34;)
+        result = {}
+        for record_type in RECORD_TYPES:
+            logging.info(f&#34;Parsing record: {record_type}&#34;)
+            try:
+                response = dns.resolver.resolve(domain, rdtype=record_type)
+                for record_data in response:
+                    logging.info(f&#34;Parsing record response {record_type}: {record_data.to_text()}&#34;)
+                    if record_type == dns.rdatatype.RdataType.HTTPS:
+                        result[record_type.name] = record_data.to_text().split(&#34; &#34;)[2:] # Remove 1 . from entries
+                        continue
+                    if result.get(record_type.name, False): # If multiple values of same record_type (i.e. 2+ A records on a domain)
+                        logging.info(f&#34;Found existing record data for {record_type}: {result.get(record_type.name, False)}&#34;)
+                        if type(result.get(record_type.name, False)) == str: # If this is the second of same record_type
+                            result[record_type.name] = [result[record_type.name], record_data.to_text()] # Convert string to list, and append new record data
+
+                        elif type(result.get(record_type.name, False)) == list: # If 3+ of same record_type
+                            logging.info(f&#34;Found existing record data for {record_type}: {result.get(record_type.name, False)}&#34;)
+                            result[record_type.name].append(record_data.to_text())
+
+                    else: # If new record without existing value
+                        logging.info(f&#34;Writing data; {record_type}: {record_data.to_text()}&#34;)
+                        result[record_type.name] = record_data.to_text()
+            except Exception:
+                ... # Record doesn&#39;t exist
+    else:
+        result = []
+        for record_type in RECORD_TYPES:
+            logging.info(f&#34;Parsing record: {record_type}&#34;)
+            try:
+                response = dns.resolver.resolve(domain, rdtype=record_type)
+                for record_data in response:
+                    logging.info(f&#34;Parsing record response {record_type}: {record_data.to_text()}&#34;)
+                    result.append(f&#34;{record_type.name}: {record_data.to_text()}&#34;)
+            except Exception:
+                ... # Record doesn&#39;t exist
+    if not result:
+        raise ValueError(f&#34;Domain {domain} did not have any configured records, please check &#34;)
+    logging.info(f&#34;Exiting get_dns_records() and returning {result}&#34;)
+    return result
+
+
+def dns_result_table(domain:str, dns_dict:dict) -&gt; str:
+    &#34;&#34;&#34;Takes in a dictionary of dns values and returns a human-readable table
+
+    Parameters
+    ----------
+    domain:str
+        The domain used to generate the dns_dict
+
+    dns_dict : dict
+        A dictionary with all the dns records in a record_type(str)-&gt;record_value(str or list) mapping
+
+    Returns
+    -------
+    str
+        A table of dns records and their values for the domain
+    &#34;&#34;&#34;    
+    logging.info(f&#34;dns_result_table(domain={domain}, dns_dict={dns_dict}&#34;)
+    if domain.startswith(&#34;https://&#34;):
+        logging.info(f&#34;Stripping https:// protocol from {domain}&#34;)
+        domain = domain.replace(&#34;https://&#34;, &#34;&#34;)
+    elif domain.startswith(&#34;http://&#34;):
+        logging.info(f&#34;Stripping http:// protocol from {domain}&#34;)
+        domain = domain.replace(&#34;http://&#34;, &#34;&#34;)
+    # add header
+    result = f&#34;&#34;&#34;\nDNS records for {domain} \n
+| Record Type | Record Value |
+|-------------|--------------|\n&#34;&#34;&#34;
+    logging.info(&#34;Starting record parsing&#34;)
+    for record in dns_dict:
+        logging.debug(f&#34;Parsing record {record}: {dns_dict[record]}&#34;)
+
+        # Add in Record Type column
+        logging.debug(f&#34;Creating record type column for {record} record&#34;)
+        record_type = _even_padding(record, 13)
+        current_row = f&#34;|{record_type}|&#34;
+
+        # Add in Record Value column
+        logging.debug(f&#34;Creating record value column for {record} record&#34;)
+        if type(dns_dict[record]) == list: # Need to render multiple result rows
+            logging.debug(&#34;Current record has multiple values, therefore needs multiple rows&#34;)
+            for index, record_value in enumerate(dns_dict[record]):
+                if index == 0: # The first row
+                    logging.debug(f&#34;Creating first row for {record}:{record_value}&#34;)
+                    value = _even_padding(record_value, 14)
+                    current_row += f&#34;{value}|\n&#34;
+                elif index == len(dns_dict[record])-1: # Last row for current record
+                    logging.debug(f&#34;Creating last row for {record}:{record_value}&#34;)
+                    value = _even_padding(record_value, 14)
+                    current_row += f&#34;|{&#39; &#39;* 13}|{value}|\n|{&#39;=&#39;* 13}|{&#39;=&#39;* 14}|\n&#34;
+
+                else: # Middle row(s) for current record
+                    logging.debug(f&#34;Creating middle row for {record}:{record_value}&#34;)
+                    value = _even_padding(record_value, 14)
+                    current_row += f&#34;|{&#39; &#39;* 13}|{value}|\n&#34;
+
+        else: # Just a single string for the current record so only takes a single row
+            logging.debug(&#34;Current record has single value, generating column&#34;)
+            value = _even_padding(dns_dict[record], 14)
+            current_row += f&#34;{value}|\n|{&#39;=&#39;* 13}|{&#39;=&#39;* 14}|\n&#34;
+
+        logging.debug(f&#34;Appending record row(s) for {record} record to result string&#34;)
+        result += current_row
+
+    logging.info(f&#34;Exiting dns_result_table() and returning {result}&#34;)
+    return result
+
+
+def _even_padding(value:str, size:int, spacer:str= &#34; &#34;) -&gt; str:
+    &#34;&#34;&#34;Creates even padding for a string value within a set size
+
+    Parameters
+    ----------
+    value : str
+        The value to pad
+
+    size : int
+        The size (number of characters) total that are available
+
+    spacer : str, optional
+        What character to space with, by default &#34; &#34;
+
+    Returns
+    -------
+    str
+        The value with padding to make it even spaced within size,
+        just returns original value if it&#39;s larger than size
+
+    Examples
+    --------
+    ### Passing a value that is shorter or equal to size
+    ```
+    # Value same length as size
+    value = &#39;192.85.111.115&#39;
+    padded_value = even_padding(value, 14)
+    print(&#34;|{padded_value}|&#34;) # Prints |192.85.111.115|
+    
+    # Value smaller than size
+    value = &#39;192.33.22.55&#39;
+    padded_value = even_padding(value, 14)
+    print(&#34;|{padded_value}|&#34;) # Prints | 192.33.22.55 |
+    ```
+
+    ### Passing a value that larger than size
+    ```
+    value = &#39;karen.ns.cloudflare.com&#39;
+    padded_value = even_padding(value, 14)
+    
+    print(&#34;|{padded_value}|&#34;) # Never get&#39;s called cause value is too large
+    ```
+    &#34;&#34;&#34;
+    logging.debug(f&#34;Entering _even_padding(value={value}, size={size}, spacer={spacer})&#34;)
+    if len(value) &gt; size:
+        return value
+    padding = abs(len(value) - size)/2
+    if not padding.is_integer():
+        padding_left = spacer * floor(padding)
+        padding_right = spacer * ceil(padding)
+    else:
+        padding_left = spacer * int(padding)
+        padding_right = spacer * int(padding)
+    logging.debug(f&#34;Exiting _even_padding() and returning:\n{padding_left}{value}{padding_right}&#34;)
+    return f&#34;{padding_left}{value}{padding_right}&#34;
+
+
+if __name__ == &#34;__main__&#34;:
+    result = get_dns_records(&#34;kieranwood.ca&#34;, as_dict=True)
+    print(dns_result_table(&#34;kieranwood.ca&#34;, result))</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="sws.dns_utilities.dns_result_table"><code class="name flex">
+<span>def <span class="ident">dns_result_table</span></span>(<span>domain: str, dns_dict: dict) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Takes in a dictionary of dns values and returns a human-readable table</p>
+<h2 id="parameters">Parameters</h2>
+<p>domain:str
+The domain used to generate the dns_dict</p>
+<dl>
+<dt><strong><code>dns_dict</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary with all the dns records in a record_type(str)-&gt;record_value(str or list) mapping</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>A table of dns records and their values for the domain</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dns_result_table(domain:str, dns_dict:dict) -&gt; str:
+    &#34;&#34;&#34;Takes in a dictionary of dns values and returns a human-readable table
+
+    Parameters
+    ----------
+    domain:str
+        The domain used to generate the dns_dict
+
+    dns_dict : dict
+        A dictionary with all the dns records in a record_type(str)-&gt;record_value(str or list) mapping
+
+    Returns
+    -------
+    str
+        A table of dns records and their values for the domain
+    &#34;&#34;&#34;    
+    logging.info(f&#34;dns_result_table(domain={domain}, dns_dict={dns_dict}&#34;)
+    if domain.startswith(&#34;https://&#34;):
+        logging.info(f&#34;Stripping https:// protocol from {domain}&#34;)
+        domain = domain.replace(&#34;https://&#34;, &#34;&#34;)
+    elif domain.startswith(&#34;http://&#34;):
+        logging.info(f&#34;Stripping http:// protocol from {domain}&#34;)
+        domain = domain.replace(&#34;http://&#34;, &#34;&#34;)
+    # add header
+    result = f&#34;&#34;&#34;\nDNS records for {domain} \n
+| Record Type | Record Value |
+|-------------|--------------|\n&#34;&#34;&#34;
+    logging.info(&#34;Starting record parsing&#34;)
+    for record in dns_dict:
+        logging.debug(f&#34;Parsing record {record}: {dns_dict[record]}&#34;)
+
+        # Add in Record Type column
+        logging.debug(f&#34;Creating record type column for {record} record&#34;)
+        record_type = _even_padding(record, 13)
+        current_row = f&#34;|{record_type}|&#34;
+
+        # Add in Record Value column
+        logging.debug(f&#34;Creating record value column for {record} record&#34;)
+        if type(dns_dict[record]) == list: # Need to render multiple result rows
+            logging.debug(&#34;Current record has multiple values, therefore needs multiple rows&#34;)
+            for index, record_value in enumerate(dns_dict[record]):
+                if index == 0: # The first row
+                    logging.debug(f&#34;Creating first row for {record}:{record_value}&#34;)
+                    value = _even_padding(record_value, 14)
+                    current_row += f&#34;{value}|\n&#34;
+                elif index == len(dns_dict[record])-1: # Last row for current record
+                    logging.debug(f&#34;Creating last row for {record}:{record_value}&#34;)
+                    value = _even_padding(record_value, 14)
+                    current_row += f&#34;|{&#39; &#39;* 13}|{value}|\n|{&#39;=&#39;* 13}|{&#39;=&#39;* 14}|\n&#34;
+
+                else: # Middle row(s) for current record
+                    logging.debug(f&#34;Creating middle row for {record}:{record_value}&#34;)
+                    value = _even_padding(record_value, 14)
+                    current_row += f&#34;|{&#39; &#39;* 13}|{value}|\n&#34;
+
+        else: # Just a single string for the current record so only takes a single row
+            logging.debug(&#34;Current record has single value, generating column&#34;)
+            value = _even_padding(dns_dict[record], 14)
+            current_row += f&#34;{value}|\n|{&#39;=&#39;* 13}|{&#39;=&#39;* 14}|\n&#34;
+
+        logging.debug(f&#34;Appending record row(s) for {record} record to result string&#34;)
+        result += current_row
+
+    logging.info(f&#34;Exiting dns_result_table() and returning {result}&#34;)
+    return result</code></pre>
+</details>
+</dd>
+<dt id="sws.dns_utilities.get_dns_records"><code class="name flex">
+<span>def <span class="ident">get_dns_records</span></span>(<span>domain: str, as_dict: bool = False) ‑> Union[List[str], Dict[str, Union[str, List[str]]]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Takes in a domain and returns either a list or dictionary of the records of the domain</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>A list of supported record types can be found by importing <code>sws.dns.RECORD_TYPES</code> or <code>sws.dns.RECORD_TYPES_TUPLE</code> (a tuple not an enum so you can do index lookups)</li>
+<li>Records are returned asynchronously, this means the ordering can be off for records. For example if you have two NS records
+<code>ns1.example.com</code> and <code>ns2.example.com</code> they could be put into the returned dict/list in either order </li>
+</ul>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>domain</code></strong> :&ensp;<code>str</code></dt>
+<dd>[description]</dd>
+<dt><strong><code>as_dict</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to return a list of strings (False) or dictionary (True), by default False</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Union[List[str], Dict[str, str]]</code></dt>
+<dd>
+<p>If as_dict is False will return a list of printable strings (i.e. ['A: 127.0.0.1']), </p>
+<p>if as_dict is True will return a dict with record:str-&gt;record_data:str mapping (i.e. {'A':'127.0.0.1'})</p>
+</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>If the domain has no valid records</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<h3 id="printing-the-values-of-kieranwoodca">Printing the values of 'kieranwood.ca'</h3>
+<pre><code>from sws.dns import get_dns_records
+
+print(get_dns_records(&quot;kieranwood.ca&quot;)) # ['A: 127.0.0.1', 'A: 106.23.49.45', 'NS: kevin.ns.cloudflare.com.']
+</code></pre>
+<h3 id="printing-the-values-of-kieranwoodca-when-as_dict-is-true">Printing the values of 'kieranwood.ca' when as_dict is True</h3>
+<pre><code>from sws.dns_utilities import get_dns_records
+
+print(get_dns_records(&quot;kieranwood.ca&quot;, as_dict=True)) # {'A': ['104.21.47.45', '172.67.144.116'], 'SOA': 'kevin.ns.cloudflare.com. dns.cloudflare.com. 2036568886 10000 2400 604800 3600'}
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_dns_records(domain:str, as_dict:bool=False) -&gt; Union[List[str], Dict[str, Union[str, List[str]]]]:
+    &#34;&#34;&#34;Takes in a domain and returns either a list or dictionary of the records of the domain
+
+    Notes
+    -----
+    - A list of supported record types can be found by importing `sws.dns.RECORD_TYPES` or `sws.dns.RECORD_TYPES_TUPLE` (a tuple not an enum so you can do index lookups)
+    - Records are returned asynchronously, this means the ordering can be off for records. For example if you have two NS records 
+    `ns1.example.com` and `ns2.example.com` they could be put into the returned dict/list in either order 
+
+    Parameters
+    ----------
+    domain : str
+        [description]
+
+    as_dict : bool, optional
+        Whether to return a list of strings (False) or dictionary (True), by default False
+
+    Returns
+    -------
+    Union[List[str], Dict[str, str]]
+        If as_dict is False will return a list of printable strings (i.e. [&#39;A: 127.0.0.1&#39;]), \n
+        if as_dict is True will return a dict with record:str-&gt;record_data:str mapping (i.e. {&#39;A&#39;:&#39;127.0.0.1&#39;})
+
+    Raises
+    ------
+    ValueError
+        If the domain has no valid records
+
+    Examples
+    --------
+    ### Printing the values of &#39;kieranwood.ca&#39;
+    ```
+    from sws.dns import get_dns_records
+
+    print(get_dns_records(&#34;kieranwood.ca&#34;)) # [&#39;A: 127.0.0.1&#39;, &#39;A: 106.23.49.45&#39;, &#39;NS: kevin.ns.cloudflare.com.&#39;]
+    ```
+
+    ### Printing the values of &#39;kieranwood.ca&#39; when as_dict is True
+    ```
+    from sws.dns_utilities import get_dns_records
+
+    print(get_dns_records(&#34;kieranwood.ca&#34;, as_dict=True)) # {&#39;A&#39;: [&#39;104.21.47.45&#39;, &#39;172.67.144.116&#39;], &#39;SOA&#39;: &#39;kevin.ns.cloudflare.com. dns.cloudflare.com. 2036568886 10000 2400 604800 3600&#39;}
+    ```
+    &#34;&#34;&#34;
+    logging.info(f&#34;Entering get_dns_records(domain={domain}, as_dict={as_dict}) &#34;)
+
+    if domain.startswith(&#34;https://&#34;):
+        logging.info(f&#34;Stripping https:// protocol from {domain}&#34;)
+        domain = domain.replace(&#34;https://&#34;, &#34;&#34;)
+    elif domain.startswith(&#34;http://&#34;):
+        logging.info(f&#34;Stripping http:// protocol from {domain}&#34;)
+        domain = domain.replace(&#34;http://&#34;, &#34;&#34;)
+
+    if as_dict:
+        logging.debug(&#34;Beginning itteration of record types, and setting up result dictionary&#34;)
+        result = {}
+        for record_type in RECORD_TYPES:
+            logging.info(f&#34;Parsing record: {record_type}&#34;)
+            try:
+                response = dns.resolver.resolve(domain, rdtype=record_type)
+                for record_data in response:
+                    logging.info(f&#34;Parsing record response {record_type}: {record_data.to_text()}&#34;)
+                    if record_type == dns.rdatatype.RdataType.HTTPS:
+                        result[record_type.name] = record_data.to_text().split(&#34; &#34;)[2:] # Remove 1 . from entries
+                        continue
+                    if result.get(record_type.name, False): # If multiple values of same record_type (i.e. 2+ A records on a domain)
+                        logging.info(f&#34;Found existing record data for {record_type}: {result.get(record_type.name, False)}&#34;)
+                        if type(result.get(record_type.name, False)) == str: # If this is the second of same record_type
+                            result[record_type.name] = [result[record_type.name], record_data.to_text()] # Convert string to list, and append new record data
+
+                        elif type(result.get(record_type.name, False)) == list: # If 3+ of same record_type
+                            logging.info(f&#34;Found existing record data for {record_type}: {result.get(record_type.name, False)}&#34;)
+                            result[record_type.name].append(record_data.to_text())
+
+                    else: # If new record without existing value
+                        logging.info(f&#34;Writing data; {record_type}: {record_data.to_text()}&#34;)
+                        result[record_type.name] = record_data.to_text()
+            except Exception:
+                ... # Record doesn&#39;t exist
+    else:
+        result = []
+        for record_type in RECORD_TYPES:
+            logging.info(f&#34;Parsing record: {record_type}&#34;)
+            try:
+                response = dns.resolver.resolve(domain, rdtype=record_type)
+                for record_data in response:
+                    logging.info(f&#34;Parsing record response {record_type}: {record_data.to_text()}&#34;)
+                    result.append(f&#34;{record_type.name}: {record_data.to_text()}&#34;)
+            except Exception:
+                ... # Record doesn&#39;t exist
+    if not result:
+        raise ValueError(f&#34;Domain {domain} did not have any configured records, please check &#34;)
+    logging.info(f&#34;Exiting get_dns_records() and returning {result}&#34;)
+    return result</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul>
+<li><a href="#notes">Notes</a></li>
+<li><a href="#examples">Examples</a><ul>
+<li><a href="#printing-the-values-of-kieranwoodca-when-as_dict-is-true">Printing the values of 'kieranwood.ca' when as_dict is True</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="sws" href="index.html">sws</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="sws.dns_utilities.dns_result_table" href="#sws.dns_utilities.dns_result_table">dns_result_table</a></code></li>
+<li><code><a title="sws.dns_utilities.get_dns_records" href="#sws.dns_utilities.get_dns_records">get_dns_records</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
