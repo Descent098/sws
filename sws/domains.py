@@ -238,5 +238,5 @@ def _install_whois():
                 print("Whois has been installed, restart script") # TODO: When new version of python-whois-extended releases remove this call
                 sys.exit()
             else:  # Linux Installation
-                logging.info(f"System is nix, installing with APT: {DOWNLOAD_FOLDER=}, {INSTALL_FOLDER=}")
+                logging.info(f"System is nix, installing with APT: DOWNLOAD_FOLDER = {DOWNLOAD_FOLDER}, INSTALL_FOLDER = {INSTALL_FOLDER}")
                 build(APTResource("whois", "whois", overwrite_agreement=True))
