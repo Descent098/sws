@@ -67,8 +67,8 @@ def main():
                     autocomplete_file.write(autocomplete_file_text)
                 print("Bash autocompletion file written to /etc/bash_completion.d/sws.sh \nPlease restart shell for autocomplete to update")
             except PermissionError:
-                print(f"Unable to write bash autocompletion file for sws are you sudo?")
-        exit()
+                print("Unable to write bash autocompletion file for sws are you sudo?")
+        sys.exit()
 
     if args["dns"]:
         dns_dict = get_dns_records(args['<domain>'], as_dict=True)
@@ -116,4 +116,4 @@ def main():
                     autocomplete_file.write(autocomplete_file_text)
                 print("Bash autocompletion file written to /etc/bash_completion.d/sws.sh \nPlease restart shell for autocomplete to update")
             except PermissionError:
-                print(f"Unable to write bash autocompletion file for sws are you sudo?")
+                print("Unable to write bash autocompletion file for sws are you sudo?")

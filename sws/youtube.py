@@ -25,7 +25,6 @@ from pytube import YouTube      # Used to download and get youtube video info
 import pytube.exceptions
 
 
-
 def _request_path():
     """Prompts user for the link to a youtube video, and path of where to download the video to"""
     logging.info("Entering _request_path()")
@@ -90,6 +89,7 @@ def get_video_metadata(video_url:str) -> dict:
         raise ValueError(f"Video URL {video_url} is a livestream and cannot be downloaded")
     logging.info(f"Exiting get_video_metadata() and returning {result}")
     return result
+
 
 def download(video_url: str, path: Union[str, bool]) -> str:
     """Downloads specified video_url to path

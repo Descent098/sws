@@ -239,7 +239,7 @@ def get_ssl_issuer(hostname: str) -> Union[list, bool]:
         logging.info(f"exiting get_ssl_issuer() and returning {issuer}")
         return issuer
     else:
-        logging.info(f"exiting get_ssl_issuer() and returning False")
+        logging.info("exiting get_ssl_issuer() and returning False")
         return False
 
 

@@ -169,7 +169,7 @@ def get_dns_records(domain:str, as_dict:bool=False) -> Union[List[str], Dict[str
                     else: # If new record without existing value
                         logging.info(f"Writing data; {record_type}: {record_data.to_text()}")
                         result[record_type.name] = record_data.to_text()
-            except Exception as e:
+            except Exception:
                 ... # Record doesn't exist
     else:
         result = []
@@ -180,7 +180,7 @@ def get_dns_records(domain:str, as_dict:bool=False) -> Union[List[str], Dict[str
                 for record_data in response:
                     logging.info(f"Parsing record response {record_type}: {record_data.to_text()}")
                     result.append(f"{record_type.name}: {record_data.to_text()}")
-            except Exception as e:
+            except Exception:
                 ... # Record doesn't exist
     if not result:
         raise ValueError(f"Domain {domain} did not have any configured records, please check ")

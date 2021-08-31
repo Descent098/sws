@@ -229,7 +229,7 @@ def _install_whois():
             subprocess.Popen("whois")  # Check if binary is installed
         except FileNotFoundError:
             if os.name == "nt":  # Install windows version of whois
-                logging.info(f"System is windows manually installing: {DOWNLOAD_FOLDER=}, {INSTALL_FOLDER=}")
+                logging.info(f"System is windows manually installing: DOWNLOAD_FOLDER = {DOWNLOAD_FOLDER}, INSTALL_FOLDER = {INSTALL_FOLDER}")
                 logging.info(f"Downloading whois from https://download.sysinternals.com/files/WhoIs.zip and installing to {INSTALL_FOLDER}")
                 build(ZIPResource("whois", "https://download.sysinternals.com/files/WhoIs.zip", overwrite_agreement=True))
                 move(f"{DOWNLOAD_FOLDER}{os.sep}whois", INSTALL_FOLDER)

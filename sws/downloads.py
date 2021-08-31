@@ -57,6 +57,7 @@ from typing import Union  # Used to specify multi-type parameters
 import requests           # Used to download Files, and get file metadata
 from tqdm import tqdm     # Used to create a progress bar for active downloads
 
+
 class Download:
     """Class used to help download files
 
@@ -123,7 +124,8 @@ class Download:
 
     print(repr(d)) # Prints: Download for https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png to download image.png to C:\\Users\\Kieran\\Desktop and has not been downloaded yet
     ```
-    """    
+    """   
+
     def __init__(self, url: str, download_path: Union[bool, str] = False, filename: Union[bool, str] = False):
         self.url = url
         self.downloaded = False
@@ -143,7 +145,8 @@ class Download:
                 self.download_path = download_path
             else:
                 raise ValueError(f"Provided download path {download_path} does not exist")
-        
+
+
     def _get_filename(self):
         """Check http headers for filename"""
         logging.info("No filename provided, checking headers")
@@ -153,7 +156,8 @@ class Download:
         else:
             self.filename = self.url.split("/")[-1]
             logging.info(f"Could not find filename, falling back to {self.filename}")
-    
+
+
     def _get_size(self) -> int:
         """Get the size of the file download
 
@@ -175,6 +179,7 @@ class Download:
             raise e # Reraise the error
         except Exception as e: # Have to do catchall and re-raise as ValueError because hundreds of exception types can be raised 
             raise ValueError(f"{self.url} is not a valid url, connection failed to establish with error {e}")
+
 
     def download(self):
         """Download a file from self.url"""
@@ -199,12 +204,14 @@ class Download:
             progress_bar.close()
             self.downloaded = True
 
+
     def __str__(self):
         return f"""Details for {self.filename}
     size: {self.size}kb
     downloaded: {self.downloaded}
     url: {self.url}
     download path: {self.download_path}"""
+
 
     def __repr__(self):
         return f"Download for {self.url} to download {self.filename} to {self.download_path} {'and has been downloaded' if self.downloaded else 'and has not been downloaded yet'}"

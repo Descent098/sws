@@ -88,7 +88,6 @@ def trace(url: str, ignored_domains: Union[list, bool], print_result: bool = Tru
         url = "http://" + url
         logging.info(f"Changed url to {url}")
 
-
     # Try going to the provided URL
     logging.info("Starting HTTP request")
     try:
@@ -123,7 +122,7 @@ def trace(url: str, ignored_domains: Union[list, bool], print_result: bool = Tru
     else:  # If the request was not redirected
         if print_result:
             print("Request was not redirected")
-        logging.info(f"Exiting trace() and returning ['Request was not redirected']") 
+        logging.info("Exiting trace() and returning ['Request was not redirected']") 
         return ["Request was not redirected"]
 
 
