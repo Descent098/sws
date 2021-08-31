@@ -39,10 +39,10 @@ jobs:
 
     - name: build html files
       run: |
-        python -m pdoc ezcv --html --force
+        python -m pdoc sws --html --force
         cd html
         ls
-        mv ezcv/* .
+        mv sws/* .
         ls
         cd ..
         ls
