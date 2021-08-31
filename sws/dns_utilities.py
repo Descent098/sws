@@ -90,6 +90,7 @@ RECORD_TYPES_TUPLE:Tuple[str] = (
     'DLV',
 )
 
+
 def get_dns_records(domain:str, as_dict:bool=False) -> Union[List[str], Dict[str, Union[str, List[str]]]]:
     """Takes in a domain and returns either a list or dictionary of the records of the domain
 
@@ -170,7 +171,7 @@ def get_dns_records(domain:str, as_dict:bool=False) -> Union[List[str], Dict[str
             except Exception as e:
                 ... # Record doesn't exist
     if not result:
-        raise ValueError("Domain {} did not have any configured records, please check ")
+        raise ValueError(f"Domain {domain} did not have any configured records, please check ")
     return result
 
 
@@ -224,6 +225,7 @@ def dns_result_table(domain:str, dns_dict:dict) -> str:
     
         result += current_row
     return result
+
 
 def _even_padding(value:str, size:int, spacer:str= " ") -> str:
     """Creates even padding for a string value within a set size
@@ -280,6 +282,7 @@ def _even_padding(value:str, size:int, spacer:str= " ") -> str:
         padding_right = spacer * int(padding)
     
     return f"{padding_left}{value}{padding_right}"
+
 
 if __name__ == "__main__":
     result = get_dns_records("kieranwood.ca", as_dict=True)

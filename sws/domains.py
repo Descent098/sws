@@ -115,6 +115,20 @@ def get_domain_info(domain: str) -> dict:
         if "Unknown TLD:" in str(e):
             raise ValueError(f"Domain {domain} is not a valid domain")
 
+    # ## TODO: When new version of python-whois-extended releases uncomment below code
+    # try:
+        
+    #     if os.name == "nt" and os.path.exists(os.path.realpath(f"{os.getenv('USERPROFILE')}\\..\\..\\whois")):
+    #         INSTALL_FOLDER = os.path.realpath(f"{os.getenv('USERPROFILE')}\\..\\..\\whois\\whois.exe")
+    #         domain_details = whois.query(domain, executable=INSTALL_FOLDER)
+    #     else:
+    #         domain_details = whois.query(domain)
+    # except Exception as e:
+    #     if "Unknown TLD:" in str(e):
+    #         raise ValueError(f"Domain {domain} is not a valid domain")
+    #     else:
+    #         raise e
+
     # Parse response
     if not domain_details:  # If the domain is not registered
         return {'creation_date': False,
@@ -173,7 +187,7 @@ def domain_availability(domain_query: dict) -> tuple:
     if not domain_query["expiration_date"] or domain_query["expiration_date"] < datetime.today():
         return "Domain available", True
     else:
-        return f"Domain unavailable until {domain_query['expiration_date'].day}/{month_name[domain_query['expiration_date'].month]}/{domain_query['expiration_date'].year}", False
+        return f"Domain {domain_query['name']} unavailable until {domain_query['expiration_date'].day}/{month_name[domain_query['expiration_date'].month]}/{domain_query['expiration_date'].year}", False
 
 
 def _install_whois():
@@ -192,8 +206,8 @@ def _install_whois():
             if os.name == "nt":  # Install windows version of whois
                 build(ZIPResource("whois", "https://download.sysinternals.com/files/WhoIs.zip", overwrite_agreement=True))
                 move(f"{DOWNLOAD_FOLDER}{os.sep}whois", INSTALL_FOLDER)
-                _add_to_path(INSTALL_FOLDER)
-                print("Whois has been installed, restart script")
+                _add_to_path(INSTALL_FOLDER) # TODO: When new version of python-whois-extended releases remove this call
+                print("Whois has been installed, restart script") # TODO: When new version of python-whois-extended releases remove this call
                 sys.exit()
             else:  # Linux Installation
                 build(APTResource("whois", "whois", overwrite_agreement=True))

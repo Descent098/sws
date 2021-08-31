@@ -15,6 +15,7 @@ from pprint import pprint         # Used to pretty-print to command line
 
 # External Dependencies
 from docopt import docopt         # Used to parse CLI arguments
+from sdu.autocomplete import *    # Used to generate bash autocomplete
 
 # Internal Dependencies
 from sws.domains import *         # Import all domains utilities
@@ -44,12 +45,29 @@ Options:
     -a --available          Gives information on whether a specific domain is available
 """
 
+command_list = [  # Used for autocompletion generation
+    command("dns", []),
+    command("youtube", []),
+    command("ssl", ["-e", "--expiry", "-c", "--cert"]),
+    command("redirects", []),
+    command("domains", ["-e", "--expiry", "-r", "--registrar", "-d", "--details", "-a", "--available"]),
+]
+
+
 def main():
     """Primary entrypoint for the sws script."""
     args = docopt(usage, version="sws V0.2.0")  # Grab arguments for parsing
 
     if len(sys.argv) == 1:  # if no arguments are provided
         print(usage)
+        if not os.name == "nt":  # Generate bash autocomplete
+            autocomplete_file_text = generate_bash_autocomplete(command_list)
+            try:
+                with open("/etc/bash_completion.d/sws.sh", "w") as autocomplete_file:
+                    autocomplete_file.write(autocomplete_file_text)
+                print("Bash autocompletion file written to /etc/bash_completion.d/sws.sh \nPlease restart shell for autocomplete to update")
+            except PermissionError:
+                print(f"Unable to write bash autocompletion file for sws are you sudo?")
         exit()
 
     if args["dns"]:
@@ -58,7 +76,7 @@ def main():
 
     elif args["ssl"]:  # Begin parsing for ssl subcommand
         if args["--expiry"]:  # If -e or --expiry is specified
-            print(f"Domain {args['<hostname>']} Expires on: {check_ssl_expiry(args['<hostname>'])}")
+            print(f"SSL cert on domain {args['<hostname>']} Expires on: {check_ssl_expiry(args['<hostname>'])}")
         if args["--cert"]:  # If -c or --cert is specified
             pprint(get_ssl_cert(args['<hostname>']))
 
@@ -77,7 +95,8 @@ def main():
     elif args["domains"]:  # Begin parsing for ssl subcommand
         domain_details = get_domain_info(args["<domain>"])
         if args["--expiry"]:  # If -e or --expiry is specified
-            pprint(domain_details["expiration_date"])
+            expiry_date = domain_details["expiration_date"]
+            print(f"Domain {args['<domain>']} set to expire on {expiry_date.strftime('%d-%b-%Y %H:%M:%S')}")
         if args["--registrar"]:
             if domain_details["registrar"]:
                 print(f"{args['<domain>']} is registered through {domain_details['registrar']}")
@@ -86,7 +105,15 @@ def main():
         if args["--details"]:
             pprint(domain_details)
         if args["--available"]:
-            print(domain_availability(domain_details)[0])
+            print(f"Domain {args['<domain>']} is available" if domain_availability(domain_details)[1] else f"{domain_availability(domain_details)[0]}")
 
     else:
         print(usage)
+        if not os.name == "nt":  # Generate bash autocomplete
+            autocomplete_file_text = generate_bash_autocomplete(command_list)
+            try:
+                with open("/etc/bash_completion.d/sws.sh", "w") as autocomplete_file:
+                    autocomplete_file.write(autocomplete_file_text)
+                print("Bash autocompletion file written to /etc/bash_completion.d/sws.sh \nPlease restart shell for autocomplete to update")
+            except PermissionError:
+                print(f"Unable to write bash autocompletion file for sws are you sudo?")

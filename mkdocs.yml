@@ -2,7 +2,7 @@ site_name: Super web Scripts
 
 nav:
     - Home: index.md
-    - Quick Start: quick-start.md
+    - Glossary: glossary.md
     - Contribution Guide: contribution-guide.md
 
 theme: readthedocs

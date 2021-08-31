@@ -17,6 +17,7 @@ Just go through and run ```pip install <name>``` or ```sudo pip3 install <name>`
 
 API docs are useful if you want an easily navigatable version of the in-line documentation. 
 The best way to do this currently is to:
+
 1.  download [pdoc3](https://pdoc3.github.io/pdoc/doc/pdoc/); ```pip install pdoc3``` 
 2.  Install your current sws code by going to the root directory and running ```pip install .```
 3.  Run ````pdoc sws --http localhost:8080```
@@ -91,20 +92,5 @@ Contains all of the modules that implement the functionality for the CLI and API
 **CONTRIBUTING.md**: Contains development details for how to contribute to sws
 
 **mkdocs.yml**: Used to specify how to build documentation from the source markdown files.
-
-**noxfile.py**: Used to configure various automated processes using [nox](https://nox.readthedocs.io/en/stable/), these include;
-
-- Building release distributions
-- Releasing distributions on PyPi
-- Running test suite agains a number of python versions (3.5-current)
-
-If anything to do with deployment or releases is failing, this is likely the suspect.
-
-There are 4 main sessions built into the noxfile and they can be run using ```nox -s <session name>``` i.e. ```nox -s test```:
-
-- build: Creates a source distribution, builds the markdown docs to html, and creates a universal wheel distribution for PyPi.
-- release: First runs the build session, then asks you to confirm all the pre-release steps have been completed, then runs *twine* to upload to PyPi
-- test: Runs the tests specified in /tests using pytest, and runs it on python versions 3.5-3.8 (assuming they are installed)
-- docs: Serves the docs on a local http server so you can validate they have the content you want without having to fully build them.
 
 **.gitignore**: A preconfigured gitignore file (info on .gitignore files can be found here: https://www.atlassian.com/git/tutorials/saving-changes/gitignore)

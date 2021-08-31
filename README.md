@@ -8,8 +8,7 @@
     - [Redirects](#redirects)
     - [SSL](#ssl)
     - [YouTube](#youtube)
-    - [Load testing](#load-testing)
-    - [Framework Validation](#framework-validation)
+    - [DNS](#dns)
     - [Roadmap](#roadmap)
 - [Why should I use sws?](#why-should-i-use-sws)
 - [Who is sws for?](#who-is-sws-for)
@@ -56,16 +55,9 @@ Get deails about the ssl cert of a hostname such as:
 
 Allows for the download of videos as well as geting metadata
 
-### Load testing
+### dns
 
-Allows for simple load testing of applications through [https://locust.io](https://locust.io)
-
-### Framework Validation
-
-Allows you to get details about what framework a site is using, such as:
-- The framework name (where determineable)
-- The UI framework (where determineable)
-- Framework versions (where determineable)
+Prints a table of the DNS records for a given domain
 
 ### Roadmap
 
@@ -98,4 +90,4 @@ run ```pip install sws``` or ```sudo pip3 install sws```.
 
 ## Development-Contribution guide
 
-See [CONTRIBUTING.md](https://github.com/Descent098/sws/blob/master/CONTRIBUTING.md) for details about helping with development.
+See [Contribution guide](https://sws.readthedocs.io/contribution-guide/) for details about helping with development.
