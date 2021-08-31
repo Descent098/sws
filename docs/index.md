@@ -14,8 +14,6 @@ sws is a utility I wrote with the intention of implementing some common web scri
 
 run ```pip install sws``` or ```sudo pip3 install sws```.
 
-
-
 ### From source
 
 1. Clone the github repo ([https://github.com/Descent098/sws](https://github.com/Descent098/sws))
@@ -222,7 +220,7 @@ Which prints
 
 ## API usage
 
-Details on API usage can be found here [https://kieranwood.ca/sws/](https://kieranwood.ca/sws/).
+Details on API usage can be found here [https://kieranwood.ca/sws/](https://kieranwood.ca/sws/). All functions include logging and can be attached to with a standard logger for debugging assitance.
 
 
 You can also build local API docs by installing [pdoc3](https://pdoc3.github.io/pdoc/) (```pip install pdoc3``` or ```sudo pip3 install pdoc3```), and then running ```pdoc sws --http localhost:8080```. Go to a browser and type in [http://localhost:8080/sws/utilities/](http://localhost:8080/sws/utilities/)

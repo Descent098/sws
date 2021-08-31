@@ -68,7 +68,8 @@ get_ssl_issuer("kieranwood.com") # Returns False
 # Internal Dependencies
 import ssl                      # Used to get details about SSL certs
 import socket                   # Used to make a request to get SSL cert
-from typing import Union
+import logging                  # Used in logging for debug and info messages
+from typing import Union        # Used to help provide more detailed type hints
 
 
 def check_ssl_expiry(hostname: str) -> str:
@@ -99,13 +100,16 @@ def check_ssl_expiry(hostname: str) -> str:
     print(check_ssl_expiry('kieranwood.ca')) # prints: 'Oct  9 12:00:00 2020 GMT'
     ```
     """
+    logging.info(f"check_ssl_expiry(hostname={hostname})")
     try:
+        logging.info(f"Getting cert info for {hostname}")
         cert = get_ssl_cert(hostname)
     except socket.gaierror:
         raise ValueError(f"Unable to connect to {hostname}")
 
     expiry_date = cert["notAfter"]
 
+    logging.info(f"exiting check_ssl_expiry() and returning {expiry_date}")
     return expiry_date
 
 
@@ -162,18 +166,24 @@ def get_ssl_cert(hostname: str) -> dict:
     '''
     ```
     """
+    logging.info(f"get_ssl_cert(hostname={hostname})")
     # Strip protocols from hostname if they exist
-    if hostname.startswith("http://"):
-        hostname = hostname.replace("http://", "")
-    elif hostname.startswith("https://"):
+    if hostname.startswith("https://"):
+        logging.info(f"Stripping https:// protocol from {hostname}")
         hostname = hostname.replace("https://", "")
+    elif hostname.startswith("http://"):
+        logging.info(f"Stripping http:// protocol from {hostname}")
+        hostname = hostname.replace("http://", "")
+
     try:
+        logging.info("Making SSL socket connection to retrieve info")
         context_socket = _get_ssl_socket(hostname)
         context_socket.connect((hostname, 443))  # Connects to the host over a socket
         cert = context_socket.getpeercert()  # Dictionary containing all the certificate information
     except socket.gaierror:
         raise ValueError(f"Unable to connect to {hostname}")
 
+    logging.info(f"exiting get_ssl_cert() and returning {cert}")
     return cert
 
 
@@ -212,19 +222,24 @@ def get_ssl_issuer(hostname: str) -> Union[list, bool]:
     get_ssl_issuer("kieranwood.com") # Returns False
     ```
     """
+    logging.info(f"get_ssl_issuer(hostname={hostname})")
     # Strip protocols from hostname if they exist
-    if hostname.startswith("http://"):
-        hostname = hostname.replace("http://", "")
-    elif hostname.startswith("https://"):
+    if hostname.startswith("https://"):
+        logging.info(f"Stripping https:// protocol from {hostname}")
         hostname = hostname.replace("https://", "")
+    elif hostname.startswith("http://"):
+        logging.info(f"Stripping http:// protocol from {hostname}")
+        hostname = hostname.replace("http://", "")
     try:
         cert = get_ssl_cert(hostname)
     except socket.gaierror:
         raise ValueError(f"Unable to connect to {hostname}")
     if cert["issuer"]:
         issuer = [data[0] for data in cert["issuer"]]
+        logging.info(f"exiting get_ssl_issuer() and returning {issuer}")
         return issuer
     else:
+        logging.info(f"exiting get_ssl_issuer() and returning False")
         return False
 
 

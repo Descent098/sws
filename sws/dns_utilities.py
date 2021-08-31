@@ -14,6 +14,7 @@ print(get_dns_records("kieranwood.ca", as_dict=True)) # {'A': ['104.21.47.45', '
 ```
 """
 # Standard Library Dependencies
+import logging                              # Used for logging
 from math import floor, ceil                # Used to normalize padding
 from typing import Dict, List, Tuple, Union # Used to provide useful typehints in functions
 
@@ -135,43 +136,55 @@ def get_dns_records(domain:str, as_dict:bool=False) -> Union[List[str], Dict[str
     print(get_dns_records("kieranwood.ca", as_dict=True)) # {'A': ['104.21.47.45', '172.67.144.116'], 'SOA': 'kevin.ns.cloudflare.com. dns.cloudflare.com. 2036568886 10000 2400 604800 3600'}
     ```
     """
+    logging.info(f"Entering get_dns_records(domain={domain}, as_dict={as_dict}) ")
+
     if domain.startswith("https://"):
+        logging.info(f"Stripping https:// protocol from {domain}")
         domain = domain.replace("https://", "")
     elif domain.startswith("http://"):
+        logging.info(f"Stripping http:// protocol from {domain}")
         domain = domain.replace("http://", "")
-        
+
     if as_dict:
+        logging.debug("Beginning itteration of record types, and setting up result dictionary")
         result = {}
         for record_type in RECORD_TYPES:
+            logging.info(f"Parsing record: {record_type}")
             try:
                 response = dns.resolver.resolve(domain, rdtype=record_type)
                 for record_data in response:
+                    logging.info(f"Parsing record response {record_type}: {record_data.to_text()}")
                     if record_type == dns.rdatatype.RdataType.HTTPS:
                         result[record_type.name] = record_data.to_text().split(" ")[2:] # Remove 1 . from entries
                         continue
                     if result.get(record_type.name, False): # If multiple values of same record_type (i.e. 2+ A records on a domain)
-
+                        logging.info(f"Found existing record data for {record_type}: {result.get(record_type.name, False)}")
                         if type(result.get(record_type.name, False)) == str: # If this is the second of same record_type
                             result[record_type.name] = [result[record_type.name], record_data.to_text()] # Convert string to list, and append new record data
 
                         elif type(result.get(record_type.name, False)) == list: # If 3+ of same record_type
+                            logging.info(f"Found existing record data for {record_type}: {result.get(record_type.name, False)}")
                             result[record_type.name].append(record_data.to_text())
 
                     else: # If new record without existing value
+                        logging.info(f"Writing data; {record_type}: {record_data.to_text()}")
                         result[record_type.name] = record_data.to_text()
             except Exception as e:
                 ... # Record doesn't exist
     else:
         result = []
         for record_type in RECORD_TYPES:
+            logging.info(f"Parsing record: {record_type}")
             try:
                 response = dns.resolver.resolve(domain, rdtype=record_type)
                 for record_data in response:
+                    logging.info(f"Parsing record response {record_type}: {record_data.to_text()}")
                     result.append(f"{record_type.name}: {record_data.to_text()}")
             except Exception as e:
                 ... # Record doesn't exist
     if not result:
         raise ValueError(f"Domain {domain} did not have any configured records, please check ")
+    logging.info(f"Exiting get_dns_records() and returning {result}")
     return result
 
 
@@ -191,39 +204,54 @@ def dns_result_table(domain:str, dns_dict:dict) -> str:
     str
         A table of dns records and their values for the domain
     """    
+    logging.info(f"dns_result_table(domain={domain}, dns_dict={dns_dict}")
     if domain.startswith("https://"):
+        logging.info(f"Stripping https:// protocol from {domain}")
         domain = domain.replace("https://", "")
     elif domain.startswith("http://"):
+        logging.info(f"Stripping http:// protocol from {domain}")
         domain = domain.replace("http://", "")
     # add header
     result = f"""\nDNS records for {domain} \n
 | Record Type | Record Value |
 |-------------|--------------|\n"""
+    logging.info("Starting record parsing")
     for record in dns_dict:
+        logging.debug(f"Parsing record {record}: {dns_dict[record]}")
 
         # Add in Record Type column
+        logging.debug(f"Creating record type column for {record} record")
         record_type = _even_padding(record, 13)
         current_row = f"|{record_type}|"
 
         # Add in Record Value column
+        logging.debug(f"Creating record value column for {record} record")
         if type(dns_dict[record]) == list: # Need to render multiple result rows
+            logging.debug("Current record has multiple values, therefore needs multiple rows")
             for index, record_value in enumerate(dns_dict[record]):
                 if index == 0: # The first row
+                    logging.debug(f"Creating first row for {record}:{record_value}")
                     value = _even_padding(record_value, 14)
                     current_row += f"{value}|\n"
                 elif index == len(dns_dict[record])-1: # Last row for current record
+                    logging.debug(f"Creating last row for {record}:{record_value}")
                     value = _even_padding(record_value, 14)
                     current_row += f"|{' '* 13}|{value}|\n|{'='* 13}|{'='* 14}|\n"
 
                 else: # Middle row(s) for current record
+                    logging.debug(f"Creating middle row for {record}:{record_value}")
                     value = _even_padding(record_value, 14)
                     current_row += f"|{' '* 13}|{value}|\n"
 
         else: # Just a single string for the current record so only takes a single row
+            logging.debug("Current record has single value, generating column")
             value = _even_padding(dns_dict[record], 14)
             current_row += f"{value}|\n|{'='* 13}|{'='* 14}|\n"
-    
+
+        logging.debug(f"Appending record row(s) for {record} record to result string")
         result += current_row
+
+    logging.info(f"Exiting dns_result_table() and returning {result}")
     return result
 
 
@@ -270,7 +298,7 @@ def _even_padding(value:str, size:int, spacer:str= " ") -> str:
     print("|{padded_value}|") # Never get's called cause value is too large
     ```
     """
-
+    logging.debug(f"Entering _even_padding(value={value}, size={size}, spacer={spacer})")
     if len(value) > size:
         return value
     padding = abs(len(value) - size)/2
@@ -280,7 +308,7 @@ def _even_padding(value:str, size:int, spacer:str= " ") -> str:
     else:
         padding_left = spacer * int(padding)
         padding_right = spacer * int(padding)
-    
+    logging.debug(f"Exiting _even_padding() and returning:\n{padding_left}{value}{padding_right}")
     return f"{padding_left}{value}{padding_right}"
 
 

@@ -21,6 +21,7 @@ HTTP Code: 200'''
 """
 
 # Standard library Dependencies
+import logging                  # Used for logging
 from typing import Union        # Used for type hints with multiple types
 
 # External Dependencies
@@ -75,6 +76,9 @@ def trace(url: str, ignored_domains: Union[list, bool], print_result: bool = Tru
     HTTP Code: 200'''
     ```
     """
+    logging.info(f"Entering trace(url={url}, ignored_domains={ignored_domains}, print_result={print_result})")
+
+    logging.info(f"Checking protocol is present on {url}")
     # Checks if protocols are present
     if "https://" in url:
         ...  # Continue
@@ -82,8 +86,11 @@ def trace(url: str, ignored_domains: Union[list, bool], print_result: bool = Tru
         ...  # Continue
     else:  # Add a protocol to URL
         url = "http://" + url
+        logging.info(f"Changed url to {url}")
+
 
     # Try going to the provided URL
+    logging.info("Starting HTTP request")
     try:
         response = requests.get(url)
 
@@ -99,19 +106,24 @@ def trace(url: str, ignored_domains: Union[list, bool], print_result: bool = Tru
     output = []  # The result of the response
     if response.history:  # If the request was redirected
         if ignored_domains:
+            logging.debug("Skipping ignored domains")
             response.history = _skip_ignored_domains(response.history, ignored_domains)
         if print_result:
             print(f"\nPrinting response for {url}")
         for level, redirect in enumerate(response.history):
+            logging.debug(f"Appending redirect {redirect.url} to output")
             output.append([level+1, redirect.url, redirect.status_code])
         output.append([len(output)+1, response.url, response.status_code])
         if print_result:
+            logging.debug("Printing result(s)")
             for redirect in output:
                 print(f"\nRedirect level:{redirect[0]} \nURL: {redirect[1]} \nHTTP Code: {redirect[2]}")
+        logging.info(f"Exiting trace() and returning {output}") 
         return output
     else:  # If the request was not redirected
         if print_result:
             print("Request was not redirected")
+        logging.info(f"Exiting trace() and returning ['Request was not redirected']") 
         return ["Request was not redirected"]
 
 

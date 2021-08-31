@@ -44,6 +44,7 @@ print(get_domain_info('kieranwood.ca')) # {'creation_date': datetime.datetime(20
 # Standard Library Dependencies
 import os                        # Used for path manipulation
 import sys                       # Used to exit safely during errors
+import logging                   # Used for logging in debugging etc.
 import subprocess                # Used to execute existing binaries
 from shutil import move          # Used to move folders within the os
 from datetime import datetime    # Used for interpreting dates and times
@@ -94,22 +95,27 @@ def get_domain_info(domain: str) -> dict:
     print(get_domain_info('kieranwood.ca')) # {'creation_date': datetime.datetime(2018, 11, 6, 5, 9, 47), 'expiration_date': datetime.datetime(2020, 11, 6, 5, 9, 47), 'last_updated': datetime.datetime(2020, 1, 8, 8, 9, 44), 'name': 'kieranwood.ca', 'name_servers': {'kevin.ns.cloudflare.com', 'sharon.ns.cloudflare.com'}, 'registrant_cc': 'redacted for privacy', 'registrar': 'Go Daddy Domains Canada, Inc'}
     ```
     """
+    logging.info(f"Entering get_domain_info(domain={domain})")
     _install_whois()  # Verify/install whois
 
     # Validation
 
     ## Strip protocols
-    if domain.startswith("http://"):
-        domain = domain.replace("http://", "")
     if domain.startswith("https://"):
+        logging.info(f"Stripping https:// protocol from {domain}")
         domain = domain.replace("https://", "")
+    elif domain.startswith("http://"):
+        logging.info(f"Stripping http:// protocol from {domain}")
+        domain = domain.replace("http://", "")
 
     ## Raise error if subdomain
+    logging.info(f"Confirming domain {domain} is not a subdomain")
     if len(domain.split(".")) > 2: # If domain is subdomain
         raise ValueError(f"Provided domain {domain} is likely a subdomain")
     
     ## Raise Error if invalid TLD
     try:
+        logging.info(f"Querying {domain} with whois")
         domain_details = whois.query(domain)
     except Exception as e:
         if "Unknown TLD:" in str(e):
@@ -131,6 +137,13 @@ def get_domain_info(domain: str) -> dict:
 
     # Parse response
     if not domain_details:  # If the domain is not registered
+        logging.info(f"""Exiting get_domain_info() and returning {{'creation_date': False,
+                'expiration_date': False,
+                'last_updated': False,
+                'name': {domain},
+                'name_servers': False,
+                'registrant_cc': False,
+                'registrar': False}}""")
         return {'creation_date': False,
                 'expiration_date': False,
                 'last_updated': False,
@@ -140,6 +153,13 @@ def get_domain_info(domain: str) -> dict:
                 'registrar': False}
 
     elif domain_details is None:  # If the domain is not registered and query completely failed
+        logging.info(f"""Exiting get_domain_info() and returning {{'creation_date': False,
+                'expiration_date': False,
+                'last_updated': False,
+                'name': {domain},
+                'name_servers': False,
+                'registrant_cc': False,
+                'registrar': False}}""")
         return {'creation_date': False,
                 'expiration_date': False,
                 'last_updated': False,
@@ -149,6 +169,7 @@ def get_domain_info(domain: str) -> dict:
                 'registrar': False}
 
     else:  # If there was domain info
+        logging.info(f"Exiting get_domain_info() and returning {vars(domain_details)}")
         return vars(domain_details)
 
 
@@ -184,14 +205,18 @@ def domain_availability(domain_query: dict) -> tuple:
     domain_availability(domain_details) # ('Domain unavailable until 6/November/2020', False)
     ```
     """
+    logging.info(f"Entering get_domain_info(domain_query={domain_query})")
     if not domain_query["expiration_date"] or domain_query["expiration_date"] < datetime.today():
+        logging.info("Domain available, returning ('Domain available', True)")
         return "Domain available", True
     else:
+        logging.info(f"Domain unavailable, returning ('Domain {domain_query['name']} unavailable until {domain_query['expiration_date'].day}/{month_name[domain_query['expiration_date'].month]}/{domain_query['expiration_date'].year}', False)")
         return f"Domain {domain_query['name']} unavailable until {domain_query['expiration_date'].day}/{month_name[domain_query['expiration_date'].month]}/{domain_query['expiration_date'].year}", False
 
 
 def _install_whois():
     """Used to install whois binary if it isn't available"""
+    logging.info("Entering _install_whois()")
     # Setting up default downloads folder based on OS
     if os.name == "nt":
         DOWNLOAD_FOLDER = f"{os.getenv('USERPROFILE')}\\Downloads"
@@ -204,10 +229,14 @@ def _install_whois():
             subprocess.Popen("whois")  # Check if binary is installed
         except FileNotFoundError:
             if os.name == "nt":  # Install windows version of whois
+                logging.info(f"System is windows manually installing: {DOWNLOAD_FOLDER=}, {INSTALL_FOLDER=}")
+                logging.info(f"Downloading whois from https://download.sysinternals.com/files/WhoIs.zip and installing to {INSTALL_FOLDER}")
                 build(ZIPResource("whois", "https://download.sysinternals.com/files/WhoIs.zip", overwrite_agreement=True))
                 move(f"{DOWNLOAD_FOLDER}{os.sep}whois", INSTALL_FOLDER)
+                logging.warning("Beginning adding whois to path variable")
                 _add_to_path(INSTALL_FOLDER) # TODO: When new version of python-whois-extended releases remove this call
                 print("Whois has been installed, restart script") # TODO: When new version of python-whois-extended releases remove this call
                 sys.exit()
             else:  # Linux Installation
+                logging.info(f"System is nix, installing with APT: {DOWNLOAD_FOLDER=}, {INSTALL_FOLDER=}")
                 build(APTResource("whois", "whois", overwrite_agreement=True))

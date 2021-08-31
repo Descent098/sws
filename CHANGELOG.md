@@ -1,6 +1,6 @@
 # Changelog
 
-## V0.2.0; TBA
+## V0.2.0; September 1st 2021
 
 Focus for this release was to revamp the package and add a ton of functionality.
 
@@ -12,6 +12,7 @@ Features:
 - Added ```dns``` module and command
 - Added ```downloads`` module to make handling downlaods simpler
 - Added `__main__.py` file for direct cli invocation (`python -m sws`)
+- Added logging to existing functions, and all new functions
 
 Documentation Improvements:
 - Added additional source, docs, and roadmap links to ```setup.py``` for PyPi

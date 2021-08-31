@@ -60,6 +60,7 @@ Notes
 -----
 - When using the domain module if ```whois``` is not installed, the package/executable will be installed
 - You should use an FQDN for any ```ssl_utilties``` or ```domains``` functions, so something like https://www.google.ca becomes google.ca
+- All functions include logging and can be attached to for debugging assitance
 """
 
 
