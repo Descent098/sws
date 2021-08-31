@@ -1,11 +1,10 @@
 version = 1
 
-test_patterns = [
-  "*/tests/**"
-]
+test_patterns = ["tests/**", "*_test.py", "tests/*.py"]
 
 exclude_patterns = [
-  "setup.py"
+  "setup.py",
+  "noxfile.py"
 ]
 
 [[analyzers]]

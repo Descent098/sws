@@ -1,141 +1,93 @@
 ![sws-banner](https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png)
 
-
+## Table of Contents
+- [Additional Documentation](#additional-documentation)
+- [What does sws do?](#what-does-sws-do)
+- [Features & Roadmap](#features--roadmap)
+    - [Domain names](#domain-names)
+    - [Redirects](#redirects)
+    - [SSL](#ssl)
+    - [YouTube](#youtube)
+    - [DNS](#dns)
+    - [Roadmap](#roadmap)
+- [Why should I use sws?](#why-should-i-use-sws)
+- [Who is sws for?](#who-is-sws-for)
+- [Quick-start](#quick-start)
+    - [Installation](#installation)
+        - [From PyPi](#from-pypi)
+        - [From source](#from-source)
+- [Development-Contribution guide](#development-contribution-guide)
 
 # Super Web Scripts
 
 A command line interface, and set of scripts for common web tasks.
 
+## Additional Documentation
 
+API Documentation can be found at [https://kieranwood.ca/sws/](https://kieranwood.ca/sws/)
+
+User Documentation for the cli can be found at [https://sws.readthedocs.io](https://sws.readthedocs.io)
+
+## What does sws do?
+
+sws is both a cli, and an API with the goal of making common web development tasks simple.
+
+## Features & Roadmap
+
+### Domain names
+
+Get information about domain names including:
+- Who is the registrar
+- When the domain expires
+
+### Redirects
+
+Get information about the trace of http redirects
+
+### SSL
+
+Get deails about the ssl cert of a hostname such as:
+- When the cert will expire
+- The issuer of the cert
+- A full dict of the details of the cert
+
+### YouTube
+
+Allows for the download of videos as well as geting metadata
+
+### dns
+
+Prints a table of the DNS records for a given domain
+
+### Roadmap
+
+A full roadmap for each project version can be found here: https://github.com/Descent098/sws/projects
+
+## Why should I use sws?
+
+The best marketing pitch that I can give you is that it's easy to use, free, and open source. The project really is here so that people don't have to keep writing the same implementations of basic tasks, and can instead use a tested package that contains a ton of functionality. Additionally if you don't want to use all of sws's features, because it is MIT liscenced you can feel free to vendor functions within your own project.
+
+## Who is sws for?
+
+Really it can be used by anyone, but here are the most typial use cases:
+- Web developers; tools provided in sws can help with debugging and validating web servers
+- Devops Specialists & testers; can use sws api to automate validation that servers are running how they should be
+- People learning webdev; Sometimes getting access to tooling while learning webdev can be difficult, this can be a one-stop shop for lots of functionality
+- Scripters; people who are looking to use sws functionality in their own projects
 
 ## Quick-start
 
 ### Installation
 
-### From PyPi
+#### From PyPi
 
 run ```pip install sws``` or ```sudo pip3 install sws```.
 
-
-
-### From source
+#### From source
 
 1. Clone the github repo ([https://github.com/Descent098/sws](https://github.com/Descent098/sws))
 2. cd into the 'sws' root directory (where setup.py is) and run ```pip install .``` or ```sudo pip3 install . ```
 
-
-
-You can validate it is installed properly by typing ```sws``` into your terminal, the output should look like this:
-
-```bash
-Super Web Scripts; A command line interface, and set of scripts for web tasks.
-
-Usage:
-    sws [-h] [-v]
-    sws redirects <url> [-t]
-    sws youtube <url> [<path>]
-    sws ssl <hostname> [-e] [-c]
-
-Options:
-    -h --help               Show this help message and exit
-    -v --version            Show program's version number and exit
-    -e --expiry             If specified will check the expiry of ssl cert/domain
-    -c --cert               If specified will print the full details of the SSL cert
-    -t --trace              If specified will show the full trace of the provided url
-```
-
-
-## Documentation
-
-User Documentation can be found at [https://kieranwood.ca/sws/](https://kieranwood.ca/sws/).
-
-
-
 ## Development-Contribution guide
 
-### Installing development dependencies
-
-There are a few dependencies you will need to use this package fully, they are specified in the extras require parameter in setup.py but you can install them manually:
-
-```
-nox   	# Used to run automated processes
-pytest 	# Used to run the test code in the tests directory
-mkdocs	# Used to create HTML versions of the markdown docs in the docs directory
-```
-
-Just go through and run ```pip install <name>``` or ```sudo pip3 install <name>```. These dependencies will help you to automate documentation creation, testing, and build + distribution (through PyPi) automation.
-
-
-
-### Folder Structure
-
-*A Brief explanation of how the project is set up for people trying to get into developing for it*
-
-
-
-#### /sws/command_line_utility.py
-
-The main entrypoint for the sws command.
-
-
-
-##### /sws/utilities
-
-Contains all the core logic that is used by the main entrypoint.
-
-
-
-#### /docs
-
-*Contains markdown source files to be used with [mkdocs](https://www.mkdocs.org/) to create html/pdf documentation.* 
-
-**Before you can use this you will need to setup the mkdocs.yml file **
-
-
-
-#### /tests
-
-*Contains tests to be run before release* 
-
-**Before you can use this you will need to create tests, for more details take a look at [pytest](https://docs.pytest.org/en/latest/) **
-
-
-
-#### Root Directory
-
-**setup.py**: Contains all the configuration for installing the package via pip.
-
-
-
-**LICENSE**: This file contains the licensing information about the project.
-
-
-
-**CHANGELOG.md**: Used to create a changelog of features you add, bugs you fix etc. as you release.
-
-
-
-**mkdocs.yml**: Used to specify how to build documentation from the source markdown files.
-
-
-
-**noxfile.py**: Used to configure various automated processes using [nox](https://nox.readthedocs.io/en/stable/), these include;
-
-- Building release distributions
-- Releasing distributions on PyPi
-- Running test suite agains a number of python versions (3.5-current)
-
-If anything to do with deployment or releases is failing, this is likely the suspect.
-
-
-
-There are 4 main sessions built into the noxfile and they can be run using ```nox -s <session name>``` i.e. ```nox -s test```:
-
-- build: Creates a source distribution, builds the markdown docs to html, and creates a universal wheel distribution for PyPi.
-- release: First runs the build session, then asks you to confirm all the pre-release steps have been completed, then runs *twine* to upload to PyPi
-- test: Runs the tests specified in /tests using pytest, and runs it on python versions 3.5-3.8 (assuming they are installed)
-- docs: Serves the docs on a local http server so you can validate they have the content you want without having to fully build them.
-
-
-
-**.gitignore**: A preconfigured gitignore file (info on .gitignore files can be found here: https://www.atlassian.com/git/tutorials/saving-changes/gitignore)
+See [Contribution guide](https://sws.readthedocs.io/contribution-guide/) for details about helping with development.
