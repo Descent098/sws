@@ -145,13 +145,17 @@ def get_dns_records(domain:str, as_dict:bool=False) -> Union[List[str], Dict[str
         logging.info(f"Stripping http:// protocol from {domain}")
         domain = domain.replace("http://", "")
 
+    print(f"Beginning dns query to {domain} this may take up to 5 mins depending on connection speed")
     if as_dict:
         logging.debug("Beginning itteration of record types, and setting up result dictionary")
         result = {}
         for record_type in RECORD_TYPES:
             logging.info(f"Parsing record: {record_type}")
             try:
-                response = dns.resolver.resolve(domain, rdtype=record_type)
+                try:
+                    response = dns.resolver.resolve(domain, rdtype=record_type, lifetime=4.5)
+                except dns.exception.Timeout:
+                    ... # Record doesn't exist
                 for record_data in response:
                     logging.info(f"Parsing record response {record_type}: {record_data.to_text()}")
                     if record_type == dns.rdatatype.RdataType.HTTPS:
@@ -176,14 +180,17 @@ def get_dns_records(domain:str, as_dict:bool=False) -> Union[List[str], Dict[str
         for record_type in RECORD_TYPES:
             logging.info(f"Parsing record: {record_type}")
             try:
-                response = dns.resolver.resolve(domain, rdtype=record_type)
+                try:
+                    response = dns.resolver.resolve(domain, rdtype=record_type, lifetime=4.5)
+                except dns.exception.Timeout:
+                    ... # Record doesn't exist
                 for record_data in response:
                     logging.info(f"Parsing record response {record_type}: {record_data.to_text()}")
                     result.append(f"{record_type.name}: {record_data.to_text()}")
             except Exception:
                 ... # Record doesn't exist
     if not result:
-        raise ValueError(f"Domain {domain} did not have any configured records, please check ")
+        raise ValueError(f"Domain {domain} did not have any configured records, please check spelling")
     logging.info(f"Exiting get_dns_records() and returning {result}")
     return result
 

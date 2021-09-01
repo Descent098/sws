@@ -4,6 +4,7 @@ import setuptools
 def get_content(*filename:str) -> str:
     """ Gets the content of a file or files and returns
     it/them as a string
+
     Parameters
     ----------
     filename : (str)
@@ -24,7 +25,7 @@ def get_content(*filename:str) -> str:
 
 setuptools.setup(
     name="sws",
-    version="0.2.0",
+    version="0.2.1",
     author="Kieran Wood",
     author_email="kieran@canadiancoding.ca",
     description="An API & command line interface, for common web tasks",

@@ -1,5 +1,4 @@
 
-
 ![sws-banner](./img/sws-banner.png)
 
 # Welcome to the sws documentation!
@@ -7,6 +6,23 @@
 ## what is sws?
 
 sws is a utility I wrote with the intention of implementing some common web scripts into one cohesive library. it is primarily intended to be used as a standalone script, but it can also be used as an API. 
+
+## What does sws do?
+
+`sws` is both a cli, and an API with the goal of making common web development tasks simple. 
+
+Specifically the API is designed to:
+
+1. Be a **cross-platform** utility API
+2. Give sensible high-level functions for common tasks
+3. Provide useful constants such as a list of dns record types
+4. Provide a set of utility classes for common tasks (such as downloads)
+
+The CLI is designed to:
+
+1. Provide a **cross-platform** set of tools
+2. Provide a toolbox for ease of use tasks so you don't need to know dozens of commands
+3. Make doing simple tasks simpler
 
 ## Installation
 
@@ -21,11 +37,8 @@ run ```pip install sws``` or ```sudo pip3 install sws```.
 
 
 ## Script Usage
-You can validate it is installed properly by typing ```sws``` into your terminal, the output should look like this:
 
-Additional details can be found at the documentation available on [https://sws.readthedocs.io/](https://sws.readthedocs.io/).
-
-You can validate it is installed properly by typing ```sws``` into your terminal, the output should look like this:
+You can validate if the script is installed properly by typing ```sws``` into your terminal, the output should look like this:
 
 ```bash
 Super Web Scripts; A command line interface, and set of scripts for web tasks.
@@ -224,4 +237,3 @@ Details on API usage can be found here [https://kieranwood.ca/sws/](https://kier
 
 
 You can also build local API docs by installing [pdoc3](https://pdoc3.github.io/pdoc/) (```pip install pdoc3``` or ```sudo pip3 install pdoc3```), and then running ```pdoc sws --http localhost:8080```. Go to a browser and type in [http://localhost:8080/sws/utilities/](http://localhost:8080/sws/utilities/)
-

@@ -28,11 +28,15 @@ import pytube.exceptions
 def _request_path():
     """Prompts user for the link to a youtube video, and path of where to download the video to"""
     logging.info("Entering _request_path()")
-    root = tk.Tk()
-    root.withdraw()
-    file_path = str(filedialog.askdirectory(
-        title="Select Video Output directory",
-        mustexist=False))
+    try:
+        root = tk.Tk()
+        root.withdraw()
+        file_path = str(filedialog.askdirectory(
+            title="Select Video Output directory",
+            mustexist=False))
+    except Exception as e:
+        print(f"Unable to start path selection GUI due to {e}, defualting downloading to current working directory {os.path.abspath('.')}")
+        file_path = os.path.abspath(".")
     return file_path
 
 

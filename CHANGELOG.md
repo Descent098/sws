@@ -1,10 +1,27 @@
 # Changelog
 
+## V0.2.1; September 1st 2021
+
+Fixing bugs found after release
+
+**Bug fixes**:
+
+- Fixed error on ```sws.youtube._request_path()``` where it would fail if no tkinter display variable is set
+- Fixed bug with retrieval of domain records where an unbound variable would exist if the request hung
+- Fixed issue where no usage would print when using DNS command without any args
+- Fixed issue where no usage would print when using SSL command without any args
+- Fixed issue with DNS lookups where on slow connections it would hang waiting for records to load
+
+**Documentation Improvements**:
+
+- Fixed some spelling errors and text duplication
+- Improved some of the readme and Usage docs explanations
+
 ## V0.2.0; September 1st 2021
 
 Focus for this release was to revamp the package and add a ton of functionality.
 
-Features:
+**Features**:
 
 - Simplified and streamlined `redirect.trace()`
 - Added Bash autocomplete for ease of use on *nix systems
@@ -14,7 +31,7 @@ Features:
 - Added `__main__.py` file for direct cli invocation (`python -m sws`)
 - Added logging to existing functions, and all new functions
 
-Documentation Improvements:
+**Documentation Improvements**:
 - Added additional source, docs, and roadmap links to ```setup.py``` for PyPi
 - Added github templates (for issues and PR's), and testing pipeline
 - Added testing suite for majority of library functions
@@ -25,7 +42,7 @@ Documentation Improvements:
 
 Initial release went out on github and PyPi. Ported functionality from kuws package.
 
-Features:
+**Features**:
 
 - Trace redirects
 - Download YouTube videos directly from command line

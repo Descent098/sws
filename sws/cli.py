@@ -79,6 +79,9 @@ def main():
             print(f"SSL cert on domain {args['<hostname>']} Expires on: {check_ssl_expiry(args['<hostname>'])}")
         if args["--cert"]:  # If -c or --cert is specified
             pprint(get_ssl_cert(args['<hostname>']))
+        if not (args["--expiry"] or args["--cert"]):
+            print(usage)
+            sys.exit()
 
     elif args["redirects"]:  # Begin parsing for redirects subcommand
         if args["<ignored>"]:
@@ -94,6 +97,7 @@ def main():
 
     elif args["domains"]:  # Begin parsing for ssl subcommand
         domain_details = get_domain_info(args["<domain>"])
+
         if args["--expiry"]:  # If -e or --expiry is specified
             expiry_date = domain_details["expiration_date"]
             print(f"Domain {args['<domain>']} set to expire on {expiry_date.strftime('%d-%b-%Y %H:%M:%S')}")
@@ -103,9 +107,15 @@ def main():
             else:
                 print(f"{args['<domain>']} is not registered")
         if args["--details"]:
+            if not domain_details['creation_date']:
+                print(f"Domain {args['<domain>']} was not registered")
             pprint(domain_details)
         if args["--available"]:
             print(f"Domain {args['<domain>']} is available" if domain_availability(domain_details)[1] else f"{domain_availability(domain_details)[0]}")
+
+        if not (args["--expiry"] or args["--registrar"] or args["--details"] or args["--available"]):
+            print(usage)
+            sys.exit()
 
     else:
         print(usage)

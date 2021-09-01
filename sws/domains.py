@@ -136,41 +136,58 @@ def get_domain_info(domain: str) -> dict:
     #         raise e
 
     # Parse response
-    if not domain_details:  # If the domain is not registered
-        logging.info(f"""Exiting get_domain_info() and returning {{'creation_date': False,
-                'expiration_date': False,
-                'last_updated': False,
-                'name': {domain},
-                'name_servers': False,
-                'registrant_cc': False,
-                'registrar': False}}""")
-        return {'creation_date': False,
-                'expiration_date': False,
-                'last_updated': False,
-                'name': domain,
-                'name_servers': False,
-                'registrant_cc': False,
-                'registrar': False}
+    try:
+        if domain_details is None:  # If the domain is not registered and query completely failed
+            logging.info(f"""Exiting get_domain_info() and returning {{'creation_date': False,
+                    'expiration_date': False,
+                    'last_updated': False,
+                    'name': {domain},
+                    'name_servers': False,
+                    'registrant_cc': False,
+                    'registrar': False}}""")
+            return {'creation_date': False,
+                    'expiration_date': False,
+                    'last_updated': False,
+                    'name': domain,
+                    'name_servers': False,
+                    'registrant_cc': False,
+                    'registrar': False}
 
-    elif domain_details is None:  # If the domain is not registered and query completely failed
-        logging.info(f"""Exiting get_domain_info() and returning {{'creation_date': False,
-                'expiration_date': False,
-                'last_updated': False,
-                'name': {domain},
-                'name_servers': False,
-                'registrant_cc': False,
-                'registrar': False}}""")
-        return {'creation_date': False,
-                'expiration_date': False,
-                'last_updated': False,
-                'name': domain,
-                'name_servers': False,
-                'registrant_cc': False,
-                'registrar': False}
+        elif not domain_details:  # If the domain is not registered
+            logging.info(f"""Exiting get_domain_info() and returning {{'creation_date': False,
+                    'expiration_date': False,
+                    'last_updated': False,
+                    'name': {domain},
+                    'name_servers': False,
+                    'registrant_cc': False,
+                    'registrar': False}}""")
+            return {'creation_date': False,
+                    'expiration_date': False,
+                    'last_updated': False,
+                    'name': domain,
+                    'name_servers': False,
+                    'registrant_cc': False,
+                    'registrar': False}
 
-    else:  # If there was domain info
-        logging.info(f"Exiting get_domain_info() and returning {vars(domain_details)}")
-        return vars(domain_details)
+        else:  # If there was domain info
+            logging.info(f"Exiting get_domain_info() and returning {vars(domain_details)}")
+            return vars(domain_details)
+
+    except UnboundLocalError: # When the variable never gets assigned after a failure
+        logging.info(f"""Exiting get_domain_info() and returning {{'creation_date': False,
+                    'expiration_date': False,
+                    'last_updated': False,
+                    'name': {domain},
+                    'name_servers': False,
+                    'registrant_cc': False,
+                    'registrar': False}}""")
+        return {'creation_date': False,
+                    'expiration_date': False,
+                    'last_updated': False,
+                    'name': domain,
+                    'name_servers': False,
+                    'registrant_cc': False,
+                    'registrar': False}
 
 
 def domain_availability(domain_query: dict) -> tuple:

@@ -22,6 +22,19 @@
 
 A command line interface, and set of scripts for common web tasks.
 
+## Quick-start
+
+### Installation
+
+#### From PyPi
+
+run ```pip install sws``` or ```sudo pip3 install sws```.
+
+#### From source
+
+1. Clone the github repo ([https://github.com/Descent098/sws](https://github.com/Descent098/sws))
+2. cd into the 'sws' root directory (where setup.py is) and run ```pip install .``` or ```sudo pip3 install . ```
+
 ## Additional Documentation
 
 API Documentation can be found at [https://kieranwood.ca/sws/](https://kieranwood.ca/sws/)
@@ -30,7 +43,20 @@ User Documentation for the cli can be found at [https://sws.readthedocs.io](http
 
 ## What does sws do?
 
-sws is both a cli, and an API with the goal of making common web development tasks simple.
+`sws` is both a cli, and an API with the goal of making common web development tasks simple. 
+
+Specifically the API is designed to:
+
+1. Be a **cross-platform** utility API
+2. Give sensible high-level functions for common tasks
+3. Provide useful constants such as a list of dns record types
+4. Provide a set of utility classes for common tasks (such as downloads)
+
+The CLI is designed to:
+
+1. Provide a **cross-platform** set of tools
+2. Provide a toolbox for ease of use tasks so you don't need to know dozens of commands
+3. Make doing simple tasks simpler
 
 ## Features & Roadmap
 
@@ -74,19 +100,6 @@ Really it can be used by anyone, but here are the most typial use cases:
 - Devops Specialists & testers; can use sws api to automate validation that servers are running how they should be
 - People learning webdev; Sometimes getting access to tooling while learning webdev can be difficult, this can be a one-stop shop for lots of functionality
 - Scripters; people who are looking to use sws functionality in their own projects
-
-## Quick-start
-
-### Installation
-
-#### From PyPi
-
-run ```pip install sws``` or ```sudo pip3 install sws```.
-
-#### From source
-
-1. Clone the github repo ([https://github.com/Descent098/sws](https://github.com/Descent098/sws))
-2. cd into the 'sws' root directory (where setup.py is) and run ```pip install .``` or ```sudo pip3 install . ```
 
 ## Development-Contribution guide
 
