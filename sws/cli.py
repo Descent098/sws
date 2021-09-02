@@ -100,7 +100,10 @@ def main():
 
         if args["--expiry"]:  # If -e or --expiry is specified
             expiry_date = domain_details["expiration_date"]
-            print(f"Domain {args['<domain>']} set to expire on {expiry_date.strftime('%d-%b-%Y %H:%M:%S')}")
+            if expiry_date:
+                print(f"Domain {args['<domain>']} set to expire on {expiry_date.strftime('%d-%b-%Y %H:%M:%S')}")
+            else:
+                print(f"Domain {args['<domain>']} is expired")
         if args["--registrar"]:
             if domain_details["registrar"]:
                 print(f"{args['<domain>']} is registered through {domain_details['registrar']}")

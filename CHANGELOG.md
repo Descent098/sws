@@ -1,5 +1,15 @@
 # Changelog
 
+## V0.2.2; September 2nd 2021
+
+More bug fixes
+
+**Bug fixes**:
+
+- Fixed a bug where installing whois would fail out midway through
+- Added additional error catching on whois binary installation
+- Fixed boolean type conversion bug on `get_domain_info()`
+
 ## V0.2.1; September 1st 2021
 
 Fixing bugs found after release
