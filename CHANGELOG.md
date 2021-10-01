@@ -1,5 +1,21 @@
 # Changelog
 
+## V0.3.0; TBA
+
+**Features**:
+
+- Added `loadtest` module and command
+- Added `frameworks` module and command
+
+**Bug fixes**:
+
+- Fixed the `domains -d` command output to be human readable
+
+**Documentation Improvements**:
+
+- Added documentation for new features
+- improved readme
+
 ## V0.2.2; September 2nd 2021
 
 More bug fixes

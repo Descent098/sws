@@ -25,7 +25,7 @@ def get_content(*filename:str) -> str:
 
 setuptools.setup(
     name="sws",
-    version="0.2.2",
+    version="0.3.0",
     author="Kieran Wood",
     author_email="kieran@canadiancoding.ca",
     description="An API & command line interface, for common web tasks",

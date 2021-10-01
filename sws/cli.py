@@ -56,7 +56,7 @@ command_list = [  # Used for autocompletion generation
 
 def main():
     """Primary entrypoint for the sws script."""
-    args = docopt(usage, version="sws V0.2.0")  # Grab arguments for parsing
+    args = docopt(usage, version="sws V0.3.0")  # Grab arguments for parsing
 
     if len(sys.argv) == 1:  # if no arguments are provided
         print(usage)
