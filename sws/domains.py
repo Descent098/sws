@@ -52,7 +52,7 @@ from calendar import month_name  # Used to convert integer month representations
 
 # Third Party Dependencies
 import whois  # Used to pull domain information
-from pystall.core import build, ZIPResource, _add_to_path, APTResource  # Used to install whois binary
+from pystall.core import build, ZIPResource, APTResource  # Used to install whois binary
 
 
 def get_domain_info(domain: str) -> dict:
@@ -115,25 +115,17 @@ def get_domain_info(domain: str) -> dict:
     
     ## Raise Error if invalid TLD
     try:
-        logging.info(f"Querying {domain} with whois")
-        domain_details = whois.query(domain)
+        
+        if os.name == "nt" and os.path.exists(os.path.realpath(f"{os.getenv('USERPROFILE')}\\..\\..\\whois")):
+            INSTALL_FOLDER = os.path.realpath(f"{os.getenv('USERPROFILE')}\\..\\..\\whois\\whois.exe")
+            domain_details = whois.query(domain, executable=INSTALL_FOLDER)
+        else:
+            domain_details = whois.query(domain)
     except Exception as e:
         if "Unknown TLD:" in str(e):
             raise ValueError(f"Domain {domain} is not a valid domain")
-
-    # ## TODO: When new version of python-whois-extended releases uncomment below code
-    # try:
-        
-    #     if os.name == "nt" and os.path.exists(os.path.realpath(f"{os.getenv('USERPROFILE')}\\..\\..\\whois")):
-    #         INSTALL_FOLDER = os.path.realpath(f"{os.getenv('USERPROFILE')}\\..\\..\\whois\\whois.exe")
-    #         domain_details = whois.query(domain, executable=INSTALL_FOLDER)
-    #     else:
-    #         domain_details = whois.query(domain)
-    # except Exception as e:
-    #     if "Unknown TLD:" in str(e):
-    #         raise ValueError(f"Domain {domain} is not a valid domain")
-    #     else:
-    #         raise e
+        else:
+            raise e
 
     # Parse response
     try:
@@ -251,7 +243,6 @@ def _install_whois():
                 build(ZIPResource("whois", "https://download.sysinternals.com/files/WhoIs.zip", overwrite_agreement=True))
                 move(f"{DOWNLOAD_FOLDER}{os.sep}whois", INSTALL_FOLDER)
                 logging.warning("Beginning adding whois to path variable")
-                _add_to_path(INSTALL_FOLDER) # TODO: When new version of python-whois-extended releases remove this call
                 print("Whois has been installed, restart script") # TODO: When new version of python-whois-extended releases remove this call
                 sys.exit()
             else:  # Linux Installation

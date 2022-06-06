@@ -10,6 +10,7 @@
 **Bug fixes**:
 
 - Fixed the `domains -d` command output to be human readable
+- Changed whois binary install on windows to no longer require path variable updating
 
 **Documentation Improvements**:
 

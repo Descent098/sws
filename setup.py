@@ -47,7 +47,7 @@ setuptools.setup(
     "pytube",                   # Used for youtube downloading
     "docopt",                   # Used for argument parsing in CLI
     "pystall",                  # Used to install ad-hoc binaries
-    "python-whois-extended",    # Used to gather domain name info
+    "python-whois-extended @ https://github.com/gen1us2k/python-whois/archive/refs/heads/master.zip",    # Used to gather domain name info
     "dnspython",                # Used to gather dns info
     "locust",                   # Used to do loadtesting
     "sdu",                      # Allows for use of autocomplete on nix systems
