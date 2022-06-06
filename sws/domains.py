@@ -164,12 +164,6 @@ def get_domain_info(domain: str) -> dict:
 
         else:  # If there was domain info
             logging.info(f"Exiting get_domain_info() and returning {vars(domain_details)}")
-            if getattr(domain_details, "creation_date", False):
-                domain_details.creation_date = domain_details.creation_date.strftime("%Y-%m-%d")
-            if getattr(domain_details, "expiration_date", False):
-                domain_details.expiration_date = domain_details.expiration_date.strftime("%Y-%m-%d")
-            if getattr(domain_details, "last_updated", False):
-                domain_details.last_updated = domain_details.last_updated.strftime("%Y-%m-%d")
             return vars(domain_details)
 
     except UnboundLocalError: # When the variable never gets assigned after a failure
@@ -262,6 +256,12 @@ def _install_whois():
 def print_domain_info(domain: dict):
     """Prints the details of a domain"""
     print(f"\nDetails of {domain['name']}:")
+    if domain.get("creation_date", False):
+                domain["creation_date"] = domain["creation_date"].strftime("%Y-%m-%d")
+    if domain.get("expiration_date", False):
+        domain["expiration_date"] = domain["expiration_date"].strftime("%Y-%m-%d")
+    if domain.get("last_updated", False):
+        domain["last_updated"] = domain["last_updated"].strftime("%Y-%m-%d")
     for key in domain:
         if type(domain[key]) is str:
             print(f"\t{key}: {domain[key]}")
