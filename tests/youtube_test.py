@@ -20,7 +20,7 @@ def test_valid_metadata():
     assert type(data["metadata"]) == YouTubeMetadata
 
     # Age restricted video
-    assert get_video_metadata("https://www.youtube.com/watch?v=0W6M_6AsWD0")["age_restricted"] == True
+    assert get_video_metadata("https://www.youtube.com/watch?v=-THmRGelP_o")["age_restricted"] == True
 
 
 def test_invalid_metadata():
@@ -34,19 +34,19 @@ def test_invalid_metadata():
 
 
 def test_valid_download():
-    download("https://www.youtube.com/watch?v=6j1I3mC0BR0", ".")
-    assert os.path.exists("Python Packaging Template usage documentation.mp4")
+    download("https://www.youtube.com/watch?v=QVV_bUxxiZ8", ".")
+    assert os.path.exists("Animated Explanation of the one-time pad.mp4")
 
     with TemporaryDirectory() as temp_directory:
-        download("https://www.youtube.com/watch?v=6j1I3mC0BR0", temp_directory)
-        assert os.path.exists(os.path.join(temp_directory, "Python Packaging Template usage documentation.mp4"))
+        download("https://www.youtube.com/watch?v=QVV_bUxxiZ8", temp_directory)
+        assert os.path.exists(os.path.join(temp_directory, "Animated Explanation of the one-time pad.mp4"))
 
     # Run download twice
-    download("https://www.youtube.com/watch?v=6j1I3mC0BR0", ".")
-    assert os.path.exists("Python Packaging Template usage documentation.mp4")
+    download("https://www.youtube.com/watch?v=QVV_bUxxiZ8", ".")
+    assert os.path.exists("Animated Explanation of the one-time pad.mp4")
 
     # Cleanup
-    os.remove("Python Packaging Template usage documentation.mp4")
+    os.remove("Animated Explanation of the one-time pad.mp4")
 
 
 def test_invalid_download():

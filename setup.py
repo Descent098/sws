@@ -44,10 +44,10 @@ setuptools.setup(
         },
     install_requires=[
     "requests",                 # Used in various modules for http connections and header parsing
-    "pytube",                   # Used for youtube downloading
+    "pytube @ https://github.com/brilliant-ember/pytube/archive/refs/heads/fix-cipher-regex.zip", # Used for youtube downloading # TODO: Remove when https://github.com/pytube/pytube/pull/1336 is merged and pypi is updated
     "docopt",                   # Used for argument parsing in CLI
     "pystall",                  # Used to install ad-hoc binaries
-    "python-whois-extended @ https://github.com/gen1us2k/python-whois/archive/refs/heads/master.zip",    # Used to gather domain name info
+    "python-whois-extended @ https://github.com/gen1us2k/python-whois/archive/refs/heads/master.zip",    # Used to gather domain name info #TODO Pull from pypi when https://github.com/gen1us2k/python-whois/pull/48 is merged and pypi is updated
     "dnspython",                # Used to gather dns info
     "locust",                   # Used to do loadtesting
     "sdu",                      # Allows for use of autocomplete on nix systems
