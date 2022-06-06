@@ -228,6 +228,11 @@ def _install_whois():
     """Used to install whois binary if it isn't available"""
     logging.info("Entering _install_whois()")
     # Setting up default downloads folder based on OS
+    try:
+        subprocess.Popen(["whois"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        return
+    except FileNotFoundError: # if whois isn't already installed
+        ...
     if os.name == "nt":
         DOWNLOAD_FOLDER = f"{os.getenv('USERPROFILE')}\\Downloads"
         INSTALL_FOLDER = os.path.realpath(f"{os.getenv('USERPROFILE')}\\..\\..\\whois")
