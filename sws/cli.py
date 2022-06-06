@@ -112,7 +112,8 @@ def main():
         if args["--details"]:
             if not domain_details['creation_date']:
                 print(f"Domain {args['<domain>']} was not registered")
-            pprint(domain_details)
+                sys.exit()
+            print_domain_info(domain_details)
         if args["--available"]:
             print(f"Domain {args['<domain>']} is available" if domain_availability(domain_details)[1] else f"{domain_availability(domain_details)[0]}")
 
@@ -125,8 +126,10 @@ def main():
         if not os.name == "nt":  # Generate bash autocomplete
             autocomplete_file_text = generate_bash_autocomplete(command_list)
             try:
-                with open("/etc/bash_completion.d/sws.sh", "w") as autocomplete_file:
+                with open("/etc/bash_completion.d/sws.sh", "w+") as autocomplete_file:
                     autocomplete_file.write(autocomplete_file_text)
                 print("Bash autocompletion file written to /etc/bash_completion.d/sws.sh \nPlease restart shell for autocomplete to update")
             except PermissionError:
                 print("Unable to write bash autocompletion file for sws are you sudo?")
+            except FileNotFoundError:
+                print("Unable to write bash autocompletion file for sws, looks like it doesn't exist")

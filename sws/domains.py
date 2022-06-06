@@ -48,7 +48,8 @@ import logging                   # Used for logging in debugging etc.
 import subprocess                # Used to execute existing binaries
 from shutil import move          # Used to move folders within the os
 from datetime import datetime    # Used for interpreting dates and times
-from calendar import month_name  # Used to convert integer month representations to string representations
+from calendar import month_name
+from typing import Iterable  # Used to convert integer month representations to string representations
 
 # Third Party Dependencies
 import whois  # Used to pull domain information
@@ -163,6 +164,12 @@ def get_domain_info(domain: str) -> dict:
 
         else:  # If there was domain info
             logging.info(f"Exiting get_domain_info() and returning {vars(domain_details)}")
+            if getattr(domain_details, "creation_date", False):
+                domain_details.creation_date = domain_details.creation_date.strftime("%Y-%m-%d")
+            if getattr(domain_details, "expiration_date", False):
+                domain_details.expiration_date = domain_details.expiration_date.strftime("%Y-%m-%d")
+            if getattr(domain_details, "last_updated", False):
+                domain_details.last_updated = domain_details.last_updated.strftime("%Y-%m-%d")
             return vars(domain_details)
 
     except UnboundLocalError: # When the variable never gets assigned after a failure
@@ -251,3 +258,24 @@ def _install_whois():
                     build(APTResource("whois", "whois", overwrite_agreement=True))
                 except:
                     raise Exception("Unable to find or install whois, please install binary and try again")
+
+def print_domain_info(domain: dict):
+    """Prints the details of a domain"""
+    print(f"\nDetails of {domain['name']}:")
+    for key in domain:
+        if type(domain[key]) is str:
+            print(f"\t{key}: {domain[key]}")
+        elif isinstance(domain[key], Iterable):
+            print(f"\t{key}:")
+            if isinstance(domain[key], dict):
+                for subkey in domain[key]:
+                    print(f"\t\t{subkey}: {domain[key][subkey]}")
+            else:
+                for subkey in domain[key]:
+                    print(f"\t\t- {subkey}")
+        elif domain[key]:
+            print(f"\t{key}: {domain[key]}")
+        else: # If key is False
+            pass
+
+

@@ -1,5 +1,9 @@
 ![sws-banner](https://raw.githubusercontent.com/Descent098/sws/master/docs/img/sws-banner.png)
 
+[![Downloads](https://pepy.tech/badge/sws)](https://pepy.tech/project/sws) 
+
+[![DeepSource](https://deepsource.io/gh/Descent098/sws.svg/?label=active+issues&show_trend=true&token=Yg9KssXSgrClbYRYM3OMJhbI)](https://deepsource.io/gh/Descent098/sws/?ref=repository-badge)
+
 ## Table of Contents
 - [Additional Documentation](#additional-documentation)
 - [What does sws do?](#what-does-sws-do)

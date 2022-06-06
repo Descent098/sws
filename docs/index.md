@@ -130,13 +130,16 @@ Which prints:
 Which prints:
 
 ```
-{'creation_date': datetime.datetime(2018, 11, 6, 5, 9, 47),
- 'expiration_date': datetime.datetime(2022, 11, 6, 5, 9, 47),
- 'last_updated': datetime.datetime(2020, 11, 7, 14, 52, 12),
- 'name': 'kieranwood.ca',
- 'name_servers': {'sharon.ns.cloudflare.com', 'kevin.ns.cloudflare.com'},
- 'registrant_cc': 'redacted for privacy',
- 'registrar': 'Go Daddy Domains Canada, Inc'}
+Details of kieranwood.ca:
+        name: kieranwood.ca
+        registrar: Go Daddy Domains Canada, Inc
+        registrant_cc: redacted for privacy
+        creation_date: 2018-11-06
+        expiration_date: 2022-11-06
+        last_updated: 2020-11-07
+        name_servers:
+                - kevin.ns.cloudflare.com
+                - sharon.ns.cloudflare.com
 ```
 
 ### redirects
