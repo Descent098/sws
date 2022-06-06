@@ -1,6 +1,8 @@
 """Testing the functionality of sws.domains"""
 
+import os
 import pytest
+import subprocess
 from sws.domains import *
 from sws.domains import _install_whois
 
@@ -9,8 +11,11 @@ from sws.domains import _install_whois
 
 def test_install_whois():
     _install_whois()
-    assert os.path.exists(os.path.realpath(f"{os.getenv('USERPROFILE')}\\..\\..\\whois"))
-    assert os.path.exists(os.path.realpath(f"{os.getenv('USERPROFILE')}\\..\\..\\whois\\whois.exe"))
+    if os.name == "nt":
+        assert os.path.exists(os.path.realpath(f"{os.getenv('USERPROFILE')}\\..\\..\\whois"))
+        assert os.path.exists(os.path.realpath(f"{os.getenv('USERPROFILE')}\\..\\..\\whois\\whois.exe"))
+    else:
+        subprocess.Popen("whois")
 
 
 def test_valid_domains():
