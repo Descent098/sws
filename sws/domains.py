@@ -119,7 +119,7 @@ def get_domain_info(domain: str) -> dict:
         
         if os.name == "nt" and os.path.exists(os.path.realpath(f"{os.getenv('USERPROFILE')}\\..\\..\\whois")):
             INSTALL_FOLDER = os.path.realpath(f"{os.getenv('USERPROFILE')}\\..\\..\\whois\\whois.exe")
-            domain_details = whois.query(domain, executable=INSTALL_FOLDER)
+            domain_details = whois.query(domain, cmd=INSTALL_FOLDER)
         else:
             domain_details = whois.query(domain)
     except Exception as e:
